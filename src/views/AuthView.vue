@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Importing both auth and our database
 import { useRouter } from 'vue-router';
