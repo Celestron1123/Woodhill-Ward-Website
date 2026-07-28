@@ -1,0 +1,68 @@
+<template>
+    <div>
+        <h2>Ward Sign Up</h2>
+
+        <form @submit.prevent="handleSignUp">
+
+            <div>
+                <label for="username">Username: </label>
+                <input type="text" id="username" v-model="username" required>
+            </div>
+
+            <br>
+
+            <div>
+                <label for="email">Email: </label>
+                <input type="email" id="email" v-model="email" required>
+            </div>
+
+            <br>
+
+            <div>
+                <label for="password">Password: </label>
+                <input type="password" id="password" v-model="password" required>
+            </div>
+
+            <br>
+
+            <button type="submit">Create Account</button>
+
+        </form>
+    </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase'; // Importing both auth and our database
+
+const username = ref('');
+const email = ref('');
+const password = ref('');
+
+const handleSignUp = async () => {
+    try {
+        // 1. Create the user in Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        const user = userCredential.user;
+
+        // 2. Create the user document in the Firestore Database
+        // We use the Auth UID as the Document ID to link them perfectly
+        await setDoc(doc(db, 'users', user.uid), {
+            username: username.value,
+            email: user.email,
+            role: 'viewer', // Everyone starts as a viewer per the design doc
+            calling: '', // Placeholder for future use
+            created: new Date()
+        });
+
+        console.log("Account created and added to database!");
+        alert("Success! Account created.");
+
+    } catch (error) {
+        console.error("Error signing up:", error.message);
+        alert(error.message);
+    }
+};
+</script>
