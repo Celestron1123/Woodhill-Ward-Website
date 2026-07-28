@@ -28,6 +28,10 @@
             <button type="submit">Create Account</button>
 
         </form>
+
+        <hr>
+        <p>Already have an account?</p>
+        <button @click="goToLogin">Log In Here</button>
     </div>
 </template>
 
@@ -36,6 +40,9 @@ import { ref } from 'vue';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Importing both auth and our database
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const username = ref('');
 const email = ref('');
@@ -56,13 +63,16 @@ const handleSignUp = async () => {
             calling: '', // Placeholder for future use
             created: new Date()
         });
-
         console.log("Account created and added to database!");
-        alert("Success! Account created.");
 
+        router.push('/feed'); // Navigate to the feed after successful sign-up
     } catch (error) {
         console.error("Error signing up:", error.message);
         alert(error.message);
     }
+};
+
+const goToLogin = () => {
+    router.push('/login');
 };
 </script>
