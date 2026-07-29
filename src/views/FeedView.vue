@@ -85,15 +85,7 @@ const submitPost = async () => {
     try {
         const userDocRef = doc(db, 'users', user.uid);
         const userDocSnap = await getDoc(userDocRef);
-        let authorName = "Unknown User";
-
-        // Check if the document exists before reading the username
-        if (userDocSnap.exists()) {
-            authorName = userDocSnap.data().username;
-        } else {
-            console.warn("User document not found! Defaulting to email.");
-            authorName = user.email; // Fallback for legacy test accounts
-        }
+        let authorName = userDocSnap.data().username;
 
         // Construct the post object matching the Design Document schema
         const postData = {

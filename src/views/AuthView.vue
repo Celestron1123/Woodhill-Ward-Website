@@ -43,7 +43,6 @@ import { auth, db } from '../firebase'; // Importing both auth and our database
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 const username = ref('');
 const email = ref('');
 const password = ref('');
@@ -53,6 +52,7 @@ const handleSignUp = async () => {
         // 1. Create the user in Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
         const user = userCredential.user;
+        await updateProfile(user, { displayName: username.value });
 
         // 2. Create the user document in the Firestore Database
         // We use the Auth UID as the Document ID to link them perfectly
