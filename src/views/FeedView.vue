@@ -28,6 +28,16 @@
                     <small> - {{ formatDate(post.created) }}</small>
                 </p>
                 <p>{{ post.textContent }}</p>
+
+                <div v-if="post.latestComment"
+                    style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed gray;">
+                    <p style="margin: 0;">
+                        <small><strong>{{ post.latestComment.authorName }}</strong>: {{ post.latestComment.content
+                            }}</small>
+                    </p>
+                </div>
+
+                <button @click="goToPost(post.id)" style="margin-top: 10px;">Comment</button>
             </div>
         </div>
 
@@ -94,7 +104,8 @@ const submitPost = async () => {
             textContent: newPostContent.value,
             imageUrls: [], // Empty for now, ready for Firebase Storage integration later
             tags: [],      // Empty for now, ready for the tagging feature
-            created: serverTimestamp() // Let Firebase handle the exact server time
+            created: serverTimestamp(), // Let Firebase handle the exact server time
+            latestComment: null // Initialize with no comment
         };
 
         // Add to Firestore
@@ -107,6 +118,11 @@ const submitPost = async () => {
         console.error("Error creating post:", error);
         alert("Failed to create post.");
     }
+};
+
+// Push router to Post Detail view
+const goToPost = (postId) => {
+    router.push(`/post/${postId}`);
 };
 
 // Utility to format Firestore timestamps into readable text
