@@ -11,6 +11,8 @@
                     <small> - {{ formatDate(post.created) }}</small>
                 </p>
                 <p style="font-size: 1.2em;">{{ post.textContent }}</p>
+
+                <ImageCarousel :images="post.imageUrls" />
             </div>
 
             <div>
@@ -51,6 +53,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { auth, db } from '../firebase';
 import { doc, getDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, updateDoc } from 'firebase/firestore';
+import ImageCarousel from '../components/ImageCarousel.vue';
 
 // Router handles navigation, Route gives us access to URL params
 const route = useRoute();

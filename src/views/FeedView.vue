@@ -43,15 +43,13 @@
                 </p>
                 <p>{{ post.textContent }}</p>
 
-                <p v-if="post.imageUrls && post.imageUrls.length > 0">
-                    <small><i>(Contains {{ post.imageUrls.length }} photo(s))</i></small>
-                </p>
+                <ImageCarousel :images="post.imageUrls" />
 
                 <div v-if="post.latestComment"
                     style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed gray;">
                     <p style="margin: 0;">
                         <small><strong>{{ post.latestComment.authorName }}</strong>: {{ post.latestComment.content
-                        }}</small>
+                            }}</small>
                     </p>
                 </div>
 
@@ -71,6 +69,7 @@ import { auth, db } from '../firebase';
 import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, getDoc } from 'firebase/firestore';
+import ImageCarousel from '../components/ImageCarousel.vue';
 
 // Initialize router and reactive variables
 const router = useRouter();
