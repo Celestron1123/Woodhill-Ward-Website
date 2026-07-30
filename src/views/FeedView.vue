@@ -191,6 +191,8 @@ onMounted(() => {
             multiple: true,
             maxFiles: 5, // Limit to prevent spam
             clientAllowedFormats: ['image'], // Prevent video/document uploads
+            cropping: true,
+            showSkipCropButton: true,
         }, (error, result) => {
             if (!error && result && result.event === "success") {
                 // When an image successfully uploads, push its secure URL to our array
