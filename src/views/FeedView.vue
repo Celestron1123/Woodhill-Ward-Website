@@ -11,7 +11,21 @@
                 <textarea v-model="newPostContent" placeholder="What's going on in the ward?" rows="4" cols="50"
                     required></textarea>
                 <br>
+                <button type="button" @click="openCloudinaryWidget" style="margin-right: 10px;">
+                    📷 Add Photos
+                </button>
                 <button type="submit">Post</button>
+
+                <div v-if="imageUrls.length > 0" style="margin-top: 15px; display: flex; gap: 10px; overflow-x: auto;">
+                    <div v-for="(url, index) in imageUrls" :key="index" style="position: relative;">
+                        <img :src="url" alt="Preview"
+                            style="height: 80px; width: 80px; object-fit: cover; border-radius: 8px;">
+                        <button type="button" @click="removeImage(index)"
+                            style="position: absolute; top: -5px; right: -5px; background: red; color: white; border: none; border-radius: 50%; cursor: pointer;">
+                            X
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
 
@@ -29,11 +43,15 @@
                 </p>
                 <p>{{ post.textContent }}</p>
 
+                <p v-if="post.imageUrls && post.imageUrls.length > 0">
+                    <small><i>(Contains {{ post.imageUrls.length }} photo(s))</i></small>
+                </p>
+
                 <div v-if="post.latestComment"
                     style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed gray;">
                     <p style="margin: 0;">
                         <small><strong>{{ post.latestComment.authorName }}</strong>: {{ post.latestComment.content
-                            }}</small>
+                        }}</small>
                     </p>
                 </div>
 
@@ -58,6 +76,8 @@ import { collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, getD
 const router = useRouter();
 const posts = ref([]);
 const newPostContent = ref('');
+const imageUrls = ref([]); // Store image URLs ready to be posted
+let cloudinaryWidget;      // Store the widget instance
 
 // Fetch posts from the Firestore 'posts' collection
 const fetchPosts = async () => {
@@ -78,7 +98,7 @@ const fetchPosts = async () => {
 
 // Handle submitting a new post
 const submitPost = async () => {
-    if (!newPostContent.value.trim()) return;
+    if (!newPostContent.value.trim()) return; // Prevent empty posts
 
     const user = auth.currentUser;
     if (!user) {
@@ -102,7 +122,7 @@ const submitPost = async () => {
             authorId: user.uid,
             authorName: authorName,
             textContent: newPostContent.value,
-            imageUrls: [], // Empty for now, ready for Firebase Storage integration later
+            imageUrls: imageUrls.value,
             tags: [],      // Empty for now, ready for the tagging feature
             created: serverTimestamp(), // Let Firebase handle the exact server time
             latestComment: null // Initialize with no comment
@@ -113,11 +133,26 @@ const submitPost = async () => {
 
         // Clear the form and re-fetch posts to show the new one
         newPostContent.value = '';
+        imageUrls.value = [];
         fetchPosts();
     } catch (error) {
         console.error("Error creating post:", error);
         alert("Failed to create post.");
     }
+};
+
+// Initialize the Cloudinary Upload Widget
+const openCloudinaryWidget = () => {
+    if (cloudinaryWidget) {
+        cloudinaryWidget.open();
+    } else {
+        alert("Image upload service is still loading, please try again in a second.");
+    }
+};
+
+// Setup Cloudinary widget on component mount
+const removeImage = (index) => {
+    imageUrls.value.splice(index, 1);
 };
 
 // Push router to Post Detail view
@@ -147,5 +182,22 @@ const handleSignOut = async () => {
 // Load posts immediately when the user visits the page
 onMounted(() => {
     fetchPosts();
+
+    // Initialize the Cloudinary Widget once the component mounts
+    if (window.cloudinary) {
+        cloudinaryWidget = window.cloudinary.createUploadWidget({
+            cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+            uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+            sources: ['local', 'camera', 'url'], // Allows files from phone, camera, or links
+            multiple: true,
+            maxFiles: 5, // Limit to prevent spam
+            clientAllowedFormats: ['image'], // Prevent video/document uploads
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                // When an image successfully uploads, push its secure URL to our array
+                imageUrls.value.push(result.info.secure_url);
+            }
+        });
+    }
 });
 </script>
