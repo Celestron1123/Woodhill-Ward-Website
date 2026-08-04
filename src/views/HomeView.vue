@@ -7,6 +7,7 @@
 
         <section class="calendar-section">
             <HomeCalendar />
+            <UpcomingEvents />
         </section>
 
     </main>
@@ -14,6 +15,7 @@
 
 <script setup>
 // Import the calendar component we just created
+import UpcomingEvents from '@/components/UpcomingEvents.vue';
 import HomeCalendar from '../components/HomeCalendar.vue'
 
 // You can add other home-page specific imports here later, 
