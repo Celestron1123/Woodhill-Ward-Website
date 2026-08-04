@@ -1,7 +1,7 @@
 <template>
     <header class="site-header">
         <div class="header-left">
-            <router-link to="/feed">
+            <router-link to="/homefeed">
                 <img src="../assets/header_icon.svg" alt="Home" class="logo-icon" />
             </router-link>
         </div>

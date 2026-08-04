@@ -65,7 +65,7 @@ const handleSignUp = async () => {
         });
         console.log("Account created and added to database!");
 
-        router.push('/feed'); // Navigate to the feed after successful sign-up
+        router.push('/homefeed'); // Navigate to the feed after successful sign-up
     } catch (error) {
         console.error("Error signing up:", error.message);
         alert(error.message);
