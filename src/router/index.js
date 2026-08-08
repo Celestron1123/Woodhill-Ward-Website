@@ -10,7 +10,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'signup',
       component: AuthView
     },
     {
@@ -29,8 +29,8 @@ const router = createRouter({
       component: PostDetailView
     },
     {
-      path: '/:home',
-      name: 'homefeed',
+      path: '/home',
+      name: 'home',
       component: HomeView
     }
   ]

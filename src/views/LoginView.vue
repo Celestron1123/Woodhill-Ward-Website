@@ -45,7 +45,7 @@ const handleLogin = async () => {
         await signInWithEmailAndPassword(auth, email.value, password.value);
 
         console.log("Logged in successfully!");
-        router.push('/feed');
+        router.push('/home');
 
     } catch (error) {
         console.error("Error logging in:", error.message);
