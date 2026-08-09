@@ -7,6 +7,7 @@
 
         <section class="calendar-section">
             <HomeCalendar />
+            <CreateEvent />
             <UpcomingEvents />
         </section>
 
@@ -72,6 +73,7 @@
 import { ref } from 'vue';
 import UpcomingEvents from '@/components/UpcomingEvents.vue';
 import HomeCalendar from '../components/HomeCalendar.vue'
+import CreateEvent from '@/components/CreateEvent.vue';
 
 // State for the image lightbox
 const expandedImage = ref(null);

@@ -16,12 +16,12 @@
             <tbody>
                 <tr v-for="event in upcomingEvents" :key="event.id">
                     <td class="col-date">
-                        {{ formatDate(event['Event Date']) }}
+                        {{ formatDate(event['date']) }}
                     </td>
                     <td class="col-details">
-                        <strong class="event-title">{{ event.Title }}</strong>
-                        <div v-if="event.Description" class="event-description">
-                            {{ event.Description }}
+                        <strong class="event-title">{{ event.title }}</strong>
+                        <div v-if="event.description" class="event-description">
+                            {{ event.description }}
                         </div>
                     </td>
                 </tr>
@@ -46,8 +46,8 @@ today.setHours(0, 0, 0, 0)
 // 3. Limited to the next 3
 const eventsQuery = query(
     collection(db, 'events'),
-    where('Event Date', '>=', today),
-    orderBy('Event Date', 'asc'),
+    where('date', '>=', today),
+    orderBy('date', 'asc'),
     limit(3)
 )
 

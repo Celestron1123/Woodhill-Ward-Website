@@ -10,8 +10,8 @@
             </div>
 
             <div v-else v-for="event in selectedEvents" :key="event.id" class="event-card">
-                <h3 class="event-title">{{ event.Title }}</h3>
-                <p class="event-description">{{ event.Description }}</p>
+                <h3 class="event-title">{{ event.title }}</h3>
+                <p class="event-description">{{ event.description }}</p>
             </div>
         </div>
     </div>
@@ -46,11 +46,11 @@ const calendarAttributes = computed(() => {
     // Add a simple dot to any day that has an event
     events.value.forEach(event => {
         // Ensure the Event Date exists before trying to parse it
-        if (event['Event Date']) {
+        if (event['date']) {
             attributes.push({
                 key: event.id,
                 dot: 'blue',
-                dates: event['Event Date'].toDate(), // Convert Firestore Timestamp to JS Date
+                dates: event['date'].toDate(), // Convert Firestore Timestamp to JS Date
             })
         }
     })
@@ -61,9 +61,9 @@ const calendarAttributes = computed(() => {
 // 4. Filter events to only show those matching the selected day
 const selectedEvents = computed(() => {
     return events.value.filter(event => {
-        if (!event['Event Date']) return false;
+        if (!event['date']) return false;
 
-        const eventDate = event['Event Date'].toDate()
+        const eventDate = event['date'].toDate()
         // Compare just the date portion (ignoring the exact time)
         return eventDate.toDateString() === selectedDate.value.toDateString()
     })
