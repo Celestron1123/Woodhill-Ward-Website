@@ -49,16 +49,16 @@
             <div class="contact-list">
                 <div class="contact-item">
                     <strong>Bishopric</strong>
-                    <p>Bishop Aaron Smith: (555) 123-4567</p>
-                    <p>1st Counselor David Jones: (555) 987-6543</p>
+                    <p>Bishop Adam Cottle</p>
+                    <p>1st Counselor Chris Cozzens</p>
                 </div>
                 <div class="contact-item">
                     <strong>Relief Society</strong>
-                    <p>President Sarah Jenkins: (555) 321-7654</p>
+                    <p>President Lisa Leavitt</p>
                 </div>
                 <div class="contact-item">
                     <strong>Elders Quorum</strong>
-                    <p>President Michael Chang: (555) 654-3210</p>
+                    <p>President Adam MacKay</p>
                 </div>
             </div>
         </section>
@@ -129,11 +129,11 @@ const submitEvent = async () => {
         formError.value = true;
         return;
     }
-    
+
     try {
         const [year, month, day] = eventForm.value.date.split('-');
         const dateObj = new Date(year, month - 1, day);
-        
+
         await addDoc(collection(db, 'events'), {
             Title: eventForm.value.title,
             'Event Date': Timestamp.fromDate(dateObj),
@@ -417,7 +417,8 @@ const closeLightbox = () => {
     gap: 1rem;
 }
 
-.cancel-btn, .submit-btn {
+.cancel-btn,
+.submit-btn {
     padding: 0.5rem 1.25rem;
     font-size: 1rem;
     border-radius: 4px;
