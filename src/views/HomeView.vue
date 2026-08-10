@@ -11,6 +11,10 @@
             <UpcomingEvents />
         </section>
 
+        <section class="announcements-section">
+            <RecentAnnouncements />
+        </section>
+
         <section class="info-section">
             <h2>Ward Family</h2>
             <div class="card-grid">
@@ -74,6 +78,7 @@ import { ref } from 'vue';
 import UpcomingEvents from '@/components/UpcomingEvents.vue';
 import HomeCalendar from '../components/HomeCalendar.vue'
 import CreateEvent from '@/components/CreateEvent.vue';
+import RecentAnnouncements from '@/components/RecentAnnouncements.vue';
 
 // State for the image lightbox
 const expandedImage = ref(null);
