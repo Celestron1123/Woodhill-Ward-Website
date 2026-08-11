@@ -13,7 +13,7 @@
 
         <div class="action-buttons">
             <PastAnnouncements />
-            <CreateAnnouncement />
+            <CreateAnnouncement v-if="canCreateAnnouncement" />
         </div>
     </div>
 </template>
@@ -24,6 +24,9 @@ import { useCollection, useFirestore } from 'vuefire';
 import { collection, query, orderBy, limit } from 'firebase/firestore';
 import PastAnnouncements from './PastAnnouncements.vue';
 import CreateAnnouncement from './CreateAnnouncement.vue';
+import { useUserRole } from '../composables/useUserRole';
+
+const { canCreateAnnouncement } = useUserRole();
 
 const db = useFirestore();
 

@@ -15,7 +15,7 @@
                 <ImageCarousel :images="post.imageUrls" />
             </div>
 
-            <div>
+            <div v-if="canCreatePost">
                 <h3>Add a Comment</h3>
                 <form @submit.prevent="submitComment">
                     <textarea v-model="newCommentContent" placeholder="Write a comment..." rows="3" cols="50"
@@ -54,8 +54,10 @@ import { useRoute, useRouter } from 'vue-router';
 import { auth, db } from '../firebase';
 import { doc, getDoc, collection, addDoc, getDocs, query, orderBy, serverTimestamp, updateDoc } from 'firebase/firestore';
 import ImageCarousel from '../components/ImageCarousel.vue';
+import { useUserRole } from '../composables/useUserRole';
 
 // Router handles navigation, Route gives us access to URL params
+const { canCreatePost } = useUserRole();
 const route = useRoute();
 const router = useRouter();
 

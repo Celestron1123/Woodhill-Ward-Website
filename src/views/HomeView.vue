@@ -7,7 +7,7 @@
 
         <section class="calendar-section">
             <HomeCalendar />
-            <CreateEvent />
+            <CreateEvent v-if="canCreateEvent" />
             <UpcomingEvents />
         </section>
 
@@ -79,6 +79,9 @@ import UpcomingEvents from '@/components/UpcomingEvents.vue';
 import HomeCalendar from '../components/HomeCalendar.vue'
 import CreateEvent from '@/components/CreateEvent.vue';
 import RecentAnnouncements from '@/components/RecentAnnouncements.vue';
+import { useUserRole } from '../composables/useUserRole';
+
+const { canCreateEvent } = useUserRole();
 
 // State for the image lightbox
 const expandedImage = ref(null);

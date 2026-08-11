@@ -14,6 +14,7 @@
             <router-link to="/primary" class="nav-link">Primary</router-link>
             <router-link to="/sunday-school" class="nav-link">Sunday School</router-link>
             <router-link to="/feed" class="nav-link">Social</router-link>
+            <router-link v-if="canManageUsers" to="/users" class="nav-link" style="color: #007bff; font-weight: bold;">Users</router-link>
 
             <router-link to="/login" class="login-button">
                 <img src="../assets/login.svg" alt="Login" class="login-icon" />
@@ -21,6 +22,11 @@
         </nav>
     </header>
 </template>
+
+<script setup>
+import { useUserRole } from '../composables/useUserRole';
+const { canManageUsers } = useUserRole();
+</script>
 
 <style scoped>
 /* Basic layout styling */
