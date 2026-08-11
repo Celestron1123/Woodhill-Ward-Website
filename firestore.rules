@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function getUserRole() {
+      return request.auth == null ? 'unauthenticated' :
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) 
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role 
+        : 'viewer';
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create, update, delete: if getUserRole() in ['verified', 'mod', 'admin', 'dev'];
+      
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create, update, delete: if getUserRole() in ['verified', 'mod', 'admin', 'dev'];
+      }
+    }
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow create, update, delete: if getUserRole() in ['mod', 'admin', 'dev'];
+    }
+    
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create, update, delete: if getUserRole() in ['mod', 'admin', 'dev'];
+    }
+
+    match /users/{userId} {
+      // Allow users to create their own profile during signup
+      allow create: if request.auth != null && request.auth.uid == userId && request.resource.data.role == 'viewer';
+
+      // Read rules
+      allow read: if request.auth != null && (
+        getUserRole() in ['admin', 'dev'] ||
+        (getUserRole() == 'mod' && resource.data.role in ['viewer', 'verified']) ||
+        request.auth.uid == userId
+      );
+                     
+      // Update rules
+      allow update: if request.auth != null && (
+        getUserRole() == 'dev' ||
+        (getUserRole() == 'admin' && resource.data.role != 'dev' && request.resource.data.role != 'dev') ||
+        (getUserRole() == 'mod' && resource.data.role in ['viewer', 'verified'] && request.resource.data.role in ['viewer', 'verified'])
+      );
+      
+      // No delete rule explicitly asked for Users, but safe to allow devs or no one.
+      allow delete: if getUserRole() == 'dev';
+    }
+  }
+}

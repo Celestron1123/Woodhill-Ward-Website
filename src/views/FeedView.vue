@@ -5,7 +5,7 @@
 
         <hr>
 
-        <div>
+        <div v-if="canCreatePost">
             <h3>Create a Post</h3>
             <form @submit.prevent="submitPost">
                 <textarea v-model="newPostContent" placeholder="What's going on in the ward?" rows="4" cols="50"
@@ -70,8 +70,10 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, getDoc } from 'firebase/firestore';
 import ImageCarousel from '../components/ImageCarousel.vue';
+import { useUserRole } from '../composables/useUserRole';
 
 // Initialize router and reactive variables
+const { canCreatePost } = useUserRole();
 const router = useRouter();
 const posts = ref([]);
 const newPostContent = ref('');
