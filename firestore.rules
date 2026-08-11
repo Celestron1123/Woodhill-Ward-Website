@@ -11,11 +11,15 @@ service cloud.firestore {
 
     match /posts/{postId} {
       allow read: if true;
-      allow create, update, delete: if getUserRole() in ['verified', 'mod', 'admin', 'dev'];
+      allow create: if getUserRole() in ['verified', 'mod', 'admin', 'dev'];
+      allow update, delete: if getUserRole() in ['mod', 'admin', 'dev'] || 
+                               (getUserRole() == 'verified' && resource.data.authorId == request.auth.uid);
       
       match /comments/{commentId} {
         allow read: if true;
-        allow create, update, delete: if getUserRole() in ['verified', 'mod', 'admin', 'dev'];
+        allow create: if getUserRole() in ['verified', 'mod', 'admin', 'dev'];
+        allow update, delete: if getUserRole() in ['mod', 'admin', 'dev'] || 
+                                 (getUserRole() == 'verified' && resource.data.authorId == request.auth.uid);
       }
     }
 
