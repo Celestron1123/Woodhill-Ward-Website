@@ -58,7 +58,7 @@ const TAG_COLORS = {
 }
 
 const PASTEL_COLORS = {
-  'Young Women': '#ffb3ba',
+  'Young Women': '#ffa6da',
   'Young Men': '#bae1ff',
   'Relief Society': '#d5baff',
   'Elders Quorum': '#baffc9',
