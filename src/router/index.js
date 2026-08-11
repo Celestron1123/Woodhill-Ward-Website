@@ -12,34 +12,34 @@ const router = createRouter({
     {
       path: '/',
       name: 'signup',
-      component: AuthView
+      component: AuthView,
     },
     {
       path: '/feed',
       name: 'feed',
-      component: FeedView
+      component: FeedView,
     },
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
     },
     {
       path: '/post/:id',
       name: 'postDetail',
-      component: PostDetailView
+      component: PostDetailView,
     },
     {
       path: '/home',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/users',
       name: 'users',
-      component: UserManagementView
-    }
-  ]
+      component: UserManagementView,
+    },
+  ],
 })
 
 export default router
