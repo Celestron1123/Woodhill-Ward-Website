@@ -11,6 +11,7 @@ import YoungMenView from '../views/YoungMenView.vue'
 import EldersQuorumView from '../views/EldersQuorumView.vue'
 import PrimaryView from '../views/PrimaryView.vue'
 import SundaySchoolView from '../views/SundaySchoolView.vue'
+import AccountCenter from '../views/AccountCenter.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,11 @@ const router = createRouter({
       path: '/sunday-school',
       name: 'sundaySchool',
       component: SundaySchoolView,
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: AccountCenter,
     },
   ],
 })

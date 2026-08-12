@@ -22,16 +22,30 @@
         >Users</router-link
       >
 
-      <router-link to="/login" class="login-button">
-        <img src="../assets/login.svg" alt="Login" class="login-icon" />
+      <router-link v-if="isLoggedIn" to="/account" class="auth-button">
+        My Account
+      </router-link>
+      <router-link v-else to="/login" class="auth-button">
+        Login
       </router-link>
     </nav>
   </header>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../firebase'
 import { useUserRole } from '../composables/useUserRole'
+
 const { canManageUsers } = useUserRole()
+const isLoggedIn = ref(false)
+
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    isLoggedIn.value = !!user
+  })
+})
 </script>
 
 <style scoped>
@@ -80,11 +94,21 @@ const { canManageUsers } = useUserRole()
   color: #5b8fb9;
 }
 
-/* Remove default link styling from the image wrapper */
-.login-button {
-  display: flex;
-  align-items: center;
-  /* Extra space before the login icon */
+/* Authentication button (Login / My Account) */
+.auth-button {
   margin-left: 1rem;
+  text-decoration: none;
+  color: #333333;
+  font-weight: bold;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.auth-button:hover {
+  background-color: #f8f9fa;
+  color: #5b8fb9;
 }
 </style>
