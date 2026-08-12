@@ -54,6 +54,18 @@
 
     <hr />
 
+    <div style="margin-bottom: 20px;">
+      <h3>Search Posts by Hashtag</h3>
+      <input 
+        v-model="searchQuery" 
+        @keyup.enter="handleSearch" 
+        placeholder="Search tags (e.g. #ReliefSociety)" 
+        style="padding: 5px; margin-right: 10px;"
+      />
+      <button @click="handleSearch" style="margin-right: 5px;">Search</button>
+      <button v-if="isSearching" @click="clearSearch">Clear</button>
+    </div>
+
     <div>
       <h3>Recent Posts</h3>
       <div v-if="posts.length === 0">No posts yet. Be the first to share!</div>
@@ -67,7 +79,18 @@
           <strong>{{ post.authorName }}</strong>
           <small> - {{ formatDate(post.created) }}</small>
         </p>
-        <p>{{ post.textContent }}</p>
+        <p style="white-space: pre-wrap; margin: 10px 0;">
+          <template v-for="(token, index) in parseTextContent(post.textContent)" :key="index">
+            <span 
+              v-if="token.type === 'hashtag'" 
+              class="hashtag" 
+              @click="triggerSearch(token.content)"
+            >
+              {{ token.content }}
+            </span>
+            <span v-else>{{ token.content }}</span>
+          </template>
+        </p>
 
         <ImageCarousel :images="post.imageUrls" />
 
@@ -107,6 +130,7 @@ import {
   serverTimestamp,
   doc,
   getDoc,
+  where,
 } from 'firebase/firestore'
 import ImageCarousel from '../components/ImageCarousel.vue'
 import { useUserRole } from '../composables/useUserRole'
@@ -117,23 +141,78 @@ const router = useRouter()
 const posts = ref([])
 const newPostContent = ref('')
 const imageUrls = ref([]) // Store image URLs ready to be posted
+const searchQuery = ref('')
+const isSearching = ref(false)
 let cloudinaryWidget // Store the widget instance
 
 // Fetch posts from the Firestore 'posts' collection
 const fetchPosts = async () => {
   try {
     const postsRef = collection(db, 'posts')
-    // Order posts by the 'created' timestamp, newest first
-    const q = query(postsRef, orderBy('created', 'desc'))
+    let q;
+    
+    if (isSearching.value && searchQuery.value.trim()) {
+      // Clean query: remove '#', remove spaces, make lowercase
+      const cleanedQuery = searchQuery.value.trim().toLowerCase().replace(/#/g, '').replace(/\s+/g, '')
+      // Removed orderBy to avoid requiring a Firebase Composite Index for tags + created
+      q = query(postsRef, where('tags', 'array-contains', cleanedQuery))
+    } else {
+      q = query(postsRef, orderBy('created', 'desc'))
+    }
+    
     const querySnapshot = await getDocs(q)
-
-    posts.value = querySnapshot.docs.map((doc) => ({
+    let fetchedPosts = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }))
+
+    // If we are searching, we sort manually on the client side so we don't need a composite index in the DB
+    if (isSearching.value && searchQuery.value.trim()) {
+      fetchedPosts.sort((a, b) => {
+        const timeA = a.created ? a.created.toMillis() : 0
+        const timeB = b.created ? b.created.toMillis() : 0
+        return timeB - timeA
+      })
+    }
+
+    posts.value = fetchedPosts
   } catch (error) {
     console.error('Error fetching posts:', error)
   }
+}
+
+const handleSearch = () => {
+  if (searchQuery.value.trim()) {
+    isSearching.value = true
+    fetchPosts()
+  } else {
+    clearSearch()
+  }
+}
+
+const clearSearch = () => {
+  searchQuery.value = ''
+  isSearching.value = false
+  fetchPosts()
+}
+
+const triggerSearch = (hashtag) => {
+  searchQuery.value = hashtag
+  handleSearch()
+}
+
+// Utility to parse post text into an array of text and hashtag tokens
+// This allows us to render hashtags as clickable links safely without v-html
+const parseTextContent = (text) => {
+  if (!text) return []
+  // Split the text around hashtags, keeping the hashtags in the array
+  const parts = text.split(/(#\w+)/g)
+  return parts.map((part) => {
+    if (part.match(/^#\w+$/)) {
+      return { type: 'hashtag', content: part }
+    }
+    return { type: 'text', content: part }
+  })
 }
 
 // Handle submitting a new post
@@ -157,13 +236,26 @@ const submitPost = async () => {
     const userDocSnap = await getDoc(userDocRef)
     let authorName = userDocSnap.data().username
 
+    // Extract inline hashtags
+    const text = newPostContent.value
+    const tags = []
+    const tagMatches = text.match(/#\w+/g)
+    if (tagMatches) {
+      tagMatches.forEach((match) => {
+        const tag = match.slice(1).toLowerCase()
+        if (!tags.includes(tag)) {
+          tags.push(tag)
+        }
+      })
+    }
+
     // Construct the post object matching the Design Document schema
     const postData = {
       authorId: user.uid,
       authorName: authorName,
       textContent: newPostContent.value,
       imageUrls: imageUrls.value,
-      tags: [], // Empty for now, ready for the tagging feature
+      tags: tags,
       created: serverTimestamp(), // Let Firebase handle the exact server time
       latestComment: null, // Initialize with no comment
     }
@@ -246,3 +338,17 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped>
+.hashtag {
+  color: #1da1f2; /* Nice bright blue */
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.hashtag:hover {
+  text-decoration: underline;
+  color: #0c85d0;
+}
+</style>

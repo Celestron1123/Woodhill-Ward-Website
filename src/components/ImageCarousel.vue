@@ -50,7 +50,7 @@
 import { ref } from 'vue'
 
 // Accept the imageUrls array from the parent post
-const props = defineProps({
+defineProps({
   images: {
     type: Array,
     required: true,

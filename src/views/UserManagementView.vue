@@ -130,7 +130,7 @@ const canModify = (targetUser) => {
   return false
 }
 
-const getAvailableRoles = (targetUser) => {
+const getAvailableRoles = () => {
   const currentUserRole = userRole.value
 
   if (currentUserRole === 'dev') {
