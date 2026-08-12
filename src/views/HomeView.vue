@@ -1,7 +1,7 @@
 <template>
   <main class="main-view-container">
     <header class="page-header">
-      <h1>Woodhill Ward Home</h1>
+      <h1>Wood Hill Ward Home</h1>
       <p class="subtitle">Upcoming Activities & Announcements</p>
     </header>
 
@@ -39,7 +39,7 @@
           <h3>Ward Boundaries</h3>
           <img
             src="/src/assets/ward-boundaries.png"
-            alt="Map of Woodhill Ward boundaries"
+            alt="Map of Wood Hill Ward boundaries"
             class="thumbnail"
           />
           <p class="click-hint">Tap to expand map</p>
