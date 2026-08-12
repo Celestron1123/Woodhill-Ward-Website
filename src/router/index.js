@@ -6,6 +6,11 @@ import PostDetailView from '../views/PostDetailView.vue'
 import HomeView from '@/views/HomeView.vue'
 import UserManagementView from '../views/UserManagementView.vue'
 import ReliefSocietyView from '../views/ReliefSocietyView.vue'
+import YoungWomenView from '../views/YoungWomenView.vue'
+import YoungMenView from '../views/YoungMenView.vue'
+import EldersQuorumView from '../views/EldersQuorumView.vue'
+import PrimaryView from '../views/PrimaryView.vue'
+import SundaySchoolView from '../views/SundaySchoolView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +49,31 @@ const router = createRouter({
       path: '/relief-society',
       name: 'reliefSociety',
       component: ReliefSocietyView,
+    },
+    {
+      path: '/young-women',
+      name: 'youngWomen',
+      component: YoungWomenView,
+    },
+    {
+      path: '/young-men',
+      name: 'youngMen',
+      component: YoungMenView,
+    },
+    {
+      path: '/elders-quorum',
+      name: 'eldersQuorum',
+      component: EldersQuorumView,
+    },
+    {
+      path: '/primary',
+      name: 'primary',
+      component: PrimaryView,
+    },
+    {
+      path: '/sunday-school',
+      name: 'sundaySchool',
+      component: SundaySchoolView,
     },
   ],
 })
