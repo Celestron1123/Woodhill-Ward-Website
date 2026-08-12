@@ -6,21 +6,22 @@
       </router-link>
     </div>
 
-    <nav class="header-right">
-      <router-link to="/young-women" class="nav-link">Young Women</router-link>
-      <router-link to="/young-men" class="nav-link">Young Men</router-link>
-      <router-link to="/relief-society" class="nav-link">Relief Society</router-link>
-      <router-link to="/elders-quorum" class="nav-link">Elders Quorum</router-link>
-      <router-link to="/primary" class="nav-link">Primary</router-link>
-      <router-link to="/sunday-school" class="nav-link">Sunday School</router-link>
-      <router-link to="/feed" class="nav-link">Social</router-link>
-      <router-link
-        v-if="canManageUsers"
-        to="/users"
-        class="nav-link"
-        style="color: #007bff; font-weight: bold"
-        >Users</router-link
-      >
+    <div class="header-right">
+      <nav class="nav-links" :class="{ 'menu-open': isMenuOpen }">
+        <router-link to="/young-women" class="nav-link" @click="closeMenu">Young Women</router-link>
+        <router-link to="/young-men" class="nav-link" @click="closeMenu">Young Men</router-link>
+        <router-link to="/relief-society" class="nav-link" @click="closeMenu">Relief Society</router-link>
+        <router-link to="/elders-quorum" class="nav-link" @click="closeMenu">Elders Quorum</router-link>
+        <router-link to="/primary" class="nav-link" @click="closeMenu">Primary</router-link>
+        <router-link to="/sunday-school" class="nav-link" @click="closeMenu">Sunday School</router-link>
+        <router-link to="/feed" class="nav-link" @click="closeMenu">Social</router-link>
+        <router-link
+          v-if="canManageUsers"
+          to="/users"
+          class="nav-link users-link"
+          @click="closeMenu"
+        >Users</router-link>
+      </nav>
 
       <router-link v-if="isLoggedIn" to="/account" class="auth-button">
         My Account
@@ -28,7 +29,19 @@
       <router-link v-else to="/login" class="auth-button">
         Login
       </router-link>
-    </nav>
+
+      <div class="hamburger" @click="toggleMenu">
+        <svg v-if="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg v-else xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -40,6 +53,15 @@ import { useUserRole } from '../composables/useUserRole'
 
 const { canManageUsers } = useUserRole()
 const isLoggedIn = ref(false)
+const isMenuOpen = ref(false)
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const closeMenu = () => {
+  isMenuOpen.value = false
+}
 
 onMounted(() => {
   onAuthStateChanged(auth, (user) => {
@@ -59,6 +81,8 @@ onMounted(() => {
   background-color: #ffffff;
   /* Light border to separate from content */
   border-bottom: 1px solid #eaeaea;
+  position: relative;
+  z-index: 1000;
 }
 
 /* Adjust icon sizes */
@@ -76,7 +100,12 @@ onMounted(() => {
 .header-right {
   display: flex;
   align-items: center;
-  /* Space between each text button */
+  gap: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
@@ -94,9 +123,13 @@ onMounted(() => {
   color: #5b8fb9;
 }
 
+.users-link {
+  color: #007bff !important;
+  font-weight: bold !important;
+}
+
 /* Authentication button (Login / My Account) */
 .auth-button {
-  margin-left: 1rem;
   text-decoration: none;
   color: #333333;
   font-weight: bold;
@@ -110,5 +143,43 @@ onMounted(() => {
 .auth-button:hover {
   background-color: #f8f9fa;
   color: #5b8fb9;
+}
+
+/* Hamburger (hidden by default on large screens) */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  z-index: 1001;
+  color: #333333;
+}
+
+/* Responsive Styles */
+@media (max-width: 1100px) {
+  .hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 250px;
+    height: auto;
+    max-height: calc(100vh - 78px);
+    background-color: #ffffff;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    box-shadow: -2px 5px 5px rgba(0,0,0,0.1);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  .nav-links.menu-open {
+    display: flex;
+  }
 }
 </style>
