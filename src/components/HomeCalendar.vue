@@ -40,9 +40,21 @@ import { ref, computed } from 'vue'
 import { useCollection, useFirestore } from 'vuefire'
 import { collection } from 'firebase/firestore'
 
+const props = defineProps({
+  filterTag: {
+    type: String,
+    default: ''
+  }
+})
+
 // 1. Fetch Events from Firestore
 const db = useFirestore()
-const events = useCollection(collection(db, 'events'))
+const allEvents = useCollection(collection(db, 'events'))
+
+const events = computed(() => {
+  if (!props.filterTag) return allEvents.value;
+  return allEvents.value.filter(event => event.tags && event.tags.includes(props.filterTag));
+})
 
 // 2. State for the currently selected date (defaults to today)
 const selectedDate = ref(new Date())

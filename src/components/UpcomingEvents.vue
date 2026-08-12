@@ -42,8 +42,16 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useCollection, useFirestore } from 'vuefire'
-import { collection, query, where, orderBy, limit } from 'firebase/firestore'
+import { collection, query, where, orderBy } from 'firebase/firestore'
+
+const props = defineProps({
+  filterTag: {
+    type: String,
+    default: ''
+  }
+})
 
 const db = useFirestore()
 
@@ -54,15 +62,21 @@ today.setHours(0, 0, 0, 0)
 // Query the events collection:
 // 1. On or after today
 // 2. Ordered chronologically
-// 3. Limited to the next 3
 const eventsQuery = query(
   collection(db, 'events'),
   where('date', '>=', today),
-  orderBy('date', 'asc'),
-  limit(3),
+  orderBy('date', 'asc')
 )
 
-const upcomingEvents = useCollection(eventsQuery)
+const allUpcomingEvents = useCollection(eventsQuery)
+
+const upcomingEvents = computed(() => {
+  let filtered = allUpcomingEvents.value;
+  if (props.filterTag) {
+    filtered = filtered.filter(event => event.tags && event.tags.includes(props.filterTag));
+  }
+  return filtered.slice(0, 3);
+})
 
 const formatDate = (timestamp) => {
   if (!timestamp) return ''
