@@ -14,7 +14,8 @@
       <div class="newsletter-card">
         <div class="newsletter-icon">
           <!-- Document Icon -->
-          <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -25,7 +26,7 @@
         <div class="newsletter-content">
           <h3>Monthly Newsletter</h3>
           <p>Read our latest updates, spiritual thoughts, and announcements.</p>
-          <a href="#" class="btn-outline" @click.prevent="alertPlaceholder">View Newsletter (PDF)</a>
+          <a href="/src/assets/August 2026 Newsletter.pdf" target="_blank" class="btn-outline">View Newsletter (PDF)</a>
         </div>
       </div>
     </section>
@@ -66,10 +67,6 @@
 import HomeCalendar from '@/components/HomeCalendar.vue'
 import UpcomingEvents from '@/components/UpcomingEvents.vue'
 import GroupSocial from '@/components/GroupSocial.vue'
-
-const alertPlaceholder = () => {
-  alert('Newsletter PDF functionality coming soon!');
-}
 </script>
 
 <style scoped>
@@ -115,7 +112,7 @@ const alertPlaceholder = () => {
 }
 
 .newsletter-card {
-  background: #fdfbf7; 
+  background: #fdfbf7;
   border: 1px solid #e0dcd3;
   border-radius: 8px;
   padding: 1.5rem;
@@ -125,7 +122,7 @@ const alertPlaceholder = () => {
 }
 
 .newsletter-icon {
-  color: #d35400; 
+  color: #d35400;
   flex-shrink: 0;
 }
 

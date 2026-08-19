@@ -18,11 +18,11 @@
     <section class="info-section">
       <h2>Ward Family</h2>
       <div class="card-grid">
-        <a href="https://scrapbook.woodhillward.com" target="_blank" class="info-card link-card">
+        <router-link to="/feed" class="info-card link-card">
           <h3>Ward Scrapbook</h3>
           <p>View photos from recent activities and ward parties!</p>
-        </a>
-        <a href="https://youtube.com/c/WoodhillWard" target="_blank" class="info-card link-card">
+        </router-link>
+        <a href="https://youtube.com/@woodhillwardnsl" target="_blank" class="info-card link-card">
           <h3>Ward YouTube</h3>
           <p>Watch sacrament meeting broadcasts and devotional videos.</p>
         </a>
@@ -32,28 +32,14 @@
     <section class="info-section">
       <h2>Building Info</h2>
       <div class="card-grid">
-        <div
-          class="info-card interactive-card"
-          @click="openLightbox('/src/assets/ward-boundaries.png')"
-        >
+        <div class="info-card interactive-card" @click="openLightbox('/src/assets/ward-boundaries.png')">
           <h3>Ward Boundaries</h3>
-          <img
-            src="/src/assets/ward-boundaries.png"
-            alt="Map of Wood Hill Ward boundaries"
-            class="thumbnail"
-          />
+          <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail" />
           <p class="click-hint">Tap to expand map</p>
         </div>
-        <div
-          class="info-card interactive-card"
-          @click="openLightbox('/src/assets/building-map.png')"
-        >
+        <div class="info-card interactive-card" @click="openLightbox('/src/assets/building-map.png')">
           <h3>Building Layout</h3>
-          <img
-            src="/src/assets/building-map.png"
-            alt="Layout map of the ward building"
-            class="thumbnail"
-          />
+          <img src="/src/assets/building-map.png" alt="Layout map of the ward building" class="thumbnail" />
           <p class="click-hint">Tap to expand map</p>
         </div>
       </div>
