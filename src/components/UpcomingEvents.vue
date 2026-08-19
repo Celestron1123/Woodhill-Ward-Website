@@ -121,53 +121,80 @@ const getTagColor = (tag) => {
 }
 
 .events-header {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
-  color: #2c3e50;
+  color: #0056b3;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .empty-state {
-  color: #666;
+  color: #3b7496;
   font-style: italic;
   font-size: 1.1rem;
 }
 
 .events-table {
   width: 100%;
-  border-collapse: collapse;
-}
-
-.events-table th,
-.events-table td {
-  text-align: left;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-collapse: separate;
+  border-spacing: 0 10px;
 }
 
 .events-table th {
+  text-align: left;
+  padding: 0.5rem 1rem;
   font-size: 1.1rem;
-  color: #4a4a4a;
+  color: #0b3d59;
   font-weight: bold;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.events-table td {
+  text-align: left;
+  padding: 1rem;
+}
+
+.events-table tbody tr {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(220, 240, 255, 0.4) 100%);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), inset 0 2px 5px rgba(255, 255, 255, 0.8);
+  transition: transform 0.2s;
+}
+
+.events-table tbody tr:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1), inset 0 2px 5px rgba(255, 255, 255, 1);
+}
+
+.events-table td:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.events-table td:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .col-date {
   width: 30%;
   vertical-align: top;
-  padding-right: 1rem;
 }
 
 .event-date-text {
   font-weight: bold;
-  color: #2c3e50;
+  color: #0056b3;
   margin-bottom: 0.25rem;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .event-time-text {
   font-size: 0.9rem;
-  color: #666;
+  color: #446b85;
 }
 
 .col-details {
@@ -177,8 +204,8 @@ const getTagColor = (tag) => {
 .event-title {
   font-size: 1.2rem;
   display: block;
-  color: #2c3e50;
-  margin-bottom: 0.25rem;
+  color: #0b3d59;
+  margin-bottom: 0.4rem;
 }
 
 .event-tags {
@@ -189,16 +216,19 @@ const getTagColor = (tag) => {
 }
 
 .tag-pill {
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
   font-size: 0.8rem;
-  color: #333;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #0b3d59;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9), 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  font-weight: bold;
 }
 
 .event-description {
   font-size: 1rem;
-  color: #4a4a4a;
+  color: #446b85;
   line-height: 1.4;
 }
 </style>

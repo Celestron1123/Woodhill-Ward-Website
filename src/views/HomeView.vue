@@ -97,36 +97,46 @@ const closeLightbox = () => {
 <style scoped>
 /* Mobile-first styling conforming to the Design Document */
 .main-view-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 1rem;
-  font-family: sans-serif;
-  color: #2c3e50;
+  color: #0b3d59;
 }
 
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.8);
 }
 
 .page-header h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 0 0 0.5rem 0;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 1);
 }
 
 .subtitle {
-  color: #656565;
-  font-size: 1.1rem;
+  color: #3b7496;
+  font-size: 1.2rem;
   margin: 0;
+  font-weight: bold;
 }
 
-.calendar-section {
-  /* Adds a subtle container around the calendar area if desired */
-  background: #ffffff;
-  border-radius: 8px;
+.calendar-section, .announcements-section {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
+  padding: 1.5rem;
 }
 
 .info-section {
@@ -134,8 +144,10 @@ const closeLightbox = () => {
 }
 
 .info-section h2 {
-  font-size: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.8rem;
+  color: #0056b3;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -144,7 +156,7 @@ const closeLightbox = () => {
 .card-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 @media (min-width: 600px) {
@@ -154,17 +166,28 @@ const closeLightbox = () => {
 }
 
 .info-card {
-  background: #f9f9f9;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  padding: 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(220, 240, 255, 0.4) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 1.5rem;
   text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), inset 0 2px 5px rgba(255, 255, 255, 1);
 }
 
 .info-card h3 {
   margin-top: 0;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.3rem;
+  color: #0056b3;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 /* Link Cards */
@@ -172,68 +195,71 @@ const closeLightbox = () => {
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: background-color 0.2s ease;
-}
-
-.link-card:hover {
-  background-color: #f0f0f0;
 }
 
 .link-card p {
-  color: #666;
-  font-size: 0.95rem;
+  color: #446b85;
+  font-size: 1rem;
   margin: 0;
 }
 
 /* Map Cards */
 .interactive-card {
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.interactive-card:hover {
-  background-color: #f0f0f0;
 }
 
 .thumbnail {
   width: 100%;
   max-height: 150px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
-  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .click-hint {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #007bff;
   margin: 0;
   font-weight: bold;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 /* Contact List */
 .contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .contact-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .contact-item {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #eaeaea;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(220, 240, 255, 0.4) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 1.2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.8);
 }
 
 .contact-item strong {
   display: block;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #0056b3;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .contact-item p {
-  margin: 0.25rem 0;
-  color: #555;
+  margin: 0.3rem 0;
+  color: #446b85;
 }
 
 /* Lightbox Overlay Styles */
@@ -243,34 +269,44 @@ const closeLightbox = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(173, 216, 230, 0.6);
+  backdrop-filter: blur(15px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  /* Ensure it floats above everything */
 }
 
 .expanded-img {
   max-width: 90%;
   max-height: 90%;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
 }
 
 .close-btn {
   position: absolute;
-  top: 20px;
-  right: 30px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 3rem;
+  top: 30px;
+  right: 40px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: #0b3d59;
+  font-size: 2rem;
   cursor: pointer;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
 .close-btn:hover {
-  color: #ddd;
+  background: white;
+  transform: scale(1.1);
 }
 </style>
