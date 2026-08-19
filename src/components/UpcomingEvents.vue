@@ -1,32 +1,32 @@
 <template>
-  <div class="upcoming-events-wrapper">
-    <h2 class="events-header">Upcoming events</h2>
+  <div class="upcoming-events-wrapper cyber-panel">
+    <h2 class="events-header chrome-text">Upcoming events</h2>
 
-    <div v-if="upcomingEvents.length === 0" class="empty-state">
-      <p>No upcoming events</p>
+    <div v-if="upcomingEvents.length === 0" class="empty-state lcd-screen">
+      <p>[NO_DATA] No upcoming events</p>
     </div>
 
     <table v-else class="events-table">
       <thead>
         <tr>
-          <th class="col-date">Date</th>
-          <th class="col-details">Activity</th>
+          <th class="col-date digital-label" style="background: none; border: none; padding-bottom: 10px;">DATE</th>
+          <th class="col-details digital-label" style="background: none; border: none; padding-bottom: 10px;">ACTIVITY</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="event in upcomingEvents" :key="event.id">
           <td class="col-date">
-            <div class="event-date-text">{{ formatDate(event['date']) }}</div>
+            <div class="event-date-text" style="color: var(--liquid-cyan);">{{ formatDate(event['date']) }}</div>
             <div class="event-time-text">{{ formatTime(event['date']) }}</div>
           </td>
           <td class="col-details">
-            <strong class="event-title">{{ event.title }}</strong>
+            <strong class="event-title" style="color: #eee;">{{ event.title }}</strong>
             <div class="event-tags" v-if="event.tags && event.tags.length">
               <span
                 v-for="tag in event.tags"
                 :key="tag"
-                class="tag-pill"
-                :style="{ backgroundColor: getTagColor(tag) }"
+                class="jumper-pill"
+                :style="{ borderTopColor: getTagColor(tag), borderLeftColor: getTagColor(tag) }"
               >
                 {{ tag === 'all' ? 'All' : tag }}
               </span>
@@ -98,13 +98,13 @@ const formatTime = (timestamp) => {
 }
 
 const PASTEL_COLORS = {
-  'Young Women': '#ffb3ba',
-  'Young Men': '#bae1ff',
-  'Relief Society': '#d5baff',
-  'Elders Quorum': '#baffc9',
-  Primary: '#ffd8b1',
-  'Sunday School': '#ffffba',
-  all: '#ffb3b3',
+  'Young Women': '#ff52c5',
+  'Young Men': '#52a3ff',
+  'Relief Society': '#9e52ff',
+  'Elders Quorum': '#52ff88',
+  Primary: '#ffa452',
+  'Sunday School': '#ffea52',
+  all: '#ff5252',
 }
 
 const getTagColor = (tag) => {
@@ -113,26 +113,24 @@ const getTagColor = (tag) => {
 </script>
 
 <style scoped>
-/* Mobile-first, plain, and readable styling adhering to the Design Document */
+/* PDA Aesthetic */
 .upcoming-events-wrapper {
   max-width: 600px;
   margin: 2rem auto 0 auto;
-  padding: 1rem;
 }
 
 .events-header {
   font-size: 1.25rem;
-  font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
-  color: #2c3e50;
 }
 
 .empty-state {
-  color: #666;
-  font-style: italic;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
   font-size: 1.1rem;
+  padding: 10px;
 }
 
 .events-table {
@@ -144,13 +142,12 @@ const getTagColor = (tag) => {
 .events-table td {
   text-align: left;
   padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #444;
 }
 
 .events-table th {
   font-size: 1.1rem;
-  color: #4a4a4a;
-  font-weight: bold;
+  color: #888;
 }
 
 .col-date {
@@ -161,13 +158,13 @@ const getTagColor = (tag) => {
 
 .event-date-text {
   font-weight: bold;
-  color: #2c3e50;
   margin-bottom: 0.25rem;
 }
 
 .event-time-text {
   font-size: 0.9rem;
-  color: #666;
+  color: #888;
+  font-family: 'Lucida Console', monospace;
 }
 
 .col-details {
@@ -177,7 +174,6 @@ const getTagColor = (tag) => {
 .event-title {
   font-size: 1.2rem;
   display: block;
-  color: #2c3e50;
   margin-bottom: 0.25rem;
 }
 
@@ -188,17 +184,9 @@ const getTagColor = (tag) => {
   margin-bottom: 0.5rem;
 }
 
-.tag-pill {
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  color: #333;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
 .event-description {
   font-size: 1rem;
-  color: #4a4a4a;
+  color: #ccc;
   line-height: 1.4;
 }
 </style>

@@ -1,40 +1,42 @@
 <template>
-  <button class="action-btn" @click="openModal">Make Announcement</button>
+  <button class="action-btn aqua-btn" @click="openModal">Make Announcement</button>
 
   <Teleport to="body">
     <div v-if="isOpen" class="lightbox-overlay" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <button class="close-btn" @click="closeModal" aria-label="Close modal">&times;</button>
-        <h2>Make Announcement</h2>
+      <div class="modal-content cyber-panel" @click.stop>
+        <button class="close-btn" @click="closeModal" aria-label="Close modal">[ X ]</button>
+        <h2 class="chrome-text">Make Announcement</h2>
         <table class="form-table">
           <tbody>
             <tr>
-              <td><label for="announcement-title">Title:</label></td>
+              <td><label for="announcement-title" class="digital-label">TITLE:</label></td>
               <td>
                 <input
                   id="announcement-title"
                   type="text"
                   v-model="form.title"
+                  class="cyber-input"
                   placeholder="Announcement Title"
                 />
               </td>
             </tr>
             <tr>
-              <td><label for="announcement-content">Content:</label></td>
+              <td><label for="announcement-content" class="digital-label">CONTENT:</label></td>
               <td>
                 <textarea
                   id="announcement-content"
                   v-model="form.content"
+                  class="cyber-input"
                   placeholder="Details of the announcement..."
                 ></textarea>
               </td>
             </tr>
           </tbody>
         </table>
-        <p v-if="formError" class="error-text">Required info missing</p>
+        <p v-if="formError" class="error-text">ERR: Required info missing</p>
         <div class="modal-actions">
-          <button class="cancel-btn" @click="closeModal">Cancel</button>
-          <button class="submit-btn" @click="submit">Submit</button>
+          <button class="cancel-btn aqua-btn" @click="closeModal" style="background: #555;">Cancel</button>
+          <button class="submit-btn aqua-btn" @click="submit" style="background: var(--bio-green-2); color: #000;">Submit</button>
         </div>
       </div>
     </div>
@@ -81,22 +83,6 @@ const submit = async () => {
 </script>
 
 <style scoped>
-.action-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-  background-color: #0056b3;
-}
-
 .lightbox-overlay {
   position: fixed;
   top: 0;
@@ -111,14 +97,12 @@ const submit = async () => {
 }
 
 .modal-content {
-  background: white;
   padding: 2rem;
-  border-radius: 8px;
   min-width: 300px;
   max-width: 90%;
   width: 500px;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), var(--bevel-inset);
 }
 
 .close-btn {
@@ -127,23 +111,23 @@ const submit = async () => {
   right: 20px;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  color: #666;
-  line-height: 1;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
 }
 
 .close-btn:hover {
-  color: #000;
+  color: #fff;
 }
 
 .modal-content h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
-  color: #2c3e50;
-  padding-right: 2rem; /* Make room for X */
+  color: #eee;
 }
 
 .form-table {
@@ -161,25 +145,12 @@ const submit = async () => {
   font-weight: bold;
   display: inline-block;
   margin-top: 0.5rem;
-  color: #4a4a4a;
 }
 
 .form-table input,
 .form-table textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
   box-sizing: border-box;
-  font-family: inherit;
-}
-
-.form-table input:focus,
-.form-table textarea:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .form-table textarea {
@@ -188,14 +159,15 @@ const submit = async () => {
 }
 
 .error-text {
-  color: #dc3545;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
-  background: #f8d7da;
+  background: #000;
+  border: 1px solid var(--crt-orange-1);
   padding: 0.5rem;
-  border-radius: 4px;
   text-align: center;
 }
 
@@ -203,34 +175,5 @@ const submit = async () => {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-}
-
-.cancel-btn,
-.submit-btn {
-  padding: 0.6rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.2s ease;
-}
-
-.cancel-btn {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.cancel-btn:hover {
-  background-color: #ccc;
-}
-
-.submit-btn {
-  background-color: #28a745;
-  color: white;
-}
-
-.submit-btn:hover {
-  background-color: #218838;
 }
 </style>

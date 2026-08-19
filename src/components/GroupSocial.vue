@@ -1,16 +1,16 @@
 <template>
-  <div class="group-social-wrapper">
-    <h2 class="section-header">Recent Social Posts</h2>
+  <div class="group-social-wrapper cyber-panel">
+    <h2 class="section-header chrome-text">Recent Social Posts</h2>
     
-    <div v-if="posts.length === 0" class="empty-state">
-      <p>No recent posts found.</p>
+    <div v-if="posts.length === 0" class="empty-state lcd-screen">
+      <p>[NO_DATA] No recent posts found.</p>
     </div>
 
     <div v-else class="posts-list">
-      <div v-for="post in posts" :key="post.id" class="post-card">
+      <div v-for="(post, index) in posts" :key="post.id" class="post-card lcd-screen">
         <p class="post-header">
-          <strong>{{ post.authorName }}</strong>
-          <span class="post-date">{{ formatDate(post.created) }}</span>
+          <strong style="color: var(--crt-orange-1);">USER: {{ post.authorName }}</strong>
+          <span class="post-date digital-label">{{ formatDate(post.created) }}</span>
         </p>
         <p class="post-content">
           <template v-for="(token, index) in parseTextContent(post.textContent)" :key="index">
@@ -18,12 +18,12 @@
             <span v-else>{{ token.content }}</span>
           </template>
         </p>
-        <ImageCarousel v-if="post.imageUrls && post.imageUrls.length" :images="post.imageUrls" />
+        <ImageCarousel v-if="post.imageUrls && post.imageUrls.length" :images="post.imageUrls" class="acrylic-glass" />
       </div>
     </div>
 
     <div class="action-buttons">
-      <router-link to="/feed" class="btn-primary">View Ward Scrapbook</router-link>
+      <router-link to="/feed" class="btn-primary aqua-btn" style="text-decoration:none;">View Ward Scrapbook</router-link>
     </div>
   </div>
 </template>
@@ -97,24 +97,22 @@ const formatDate = (timestamp) => {
 .group-social-wrapper {
   max-width: 600px;
   margin: 2.5rem auto;
-  padding: 1rem;
 }
 
 .section-header {
   font-size: 1.25rem;
-  font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
-  color: #2c3e50;
   margin-top: 0;
 }
 
 .empty-state {
-  color: #666;
-  font-style: italic;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
+  padding: 10px;
 }
 
 .posts-list {
@@ -125,10 +123,8 @@ const formatDate = (timestamp) => {
 }
 
 .post-card {
-  background: #f9f9f9;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
   padding: 1.25rem;
+  margin-bottom: 10px;
 }
 
 .post-header {
@@ -136,16 +132,17 @@ const formatDate = (timestamp) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #333;
+  padding-bottom: 5px;
 }
 
 .post-date {
-  color: #7f8c8d;
   font-size: 0.9rem;
 }
 
 .post-content {
   margin: 0 0 1rem 0;
-  color: #4a4a4a;
+  color: #eee;
   line-height: 1.5;
   white-space: pre-wrap;
 }
@@ -153,25 +150,11 @@ const formatDate = (timestamp) => {
 .hashtag {
   color: #1da1f2;
   font-weight: bold;
+  text-shadow: 0 0 5px rgba(29, 161, 242, 0.5);
 }
 
 .action-buttons {
   display: flex;
   justify-content: center;
-}
-
-.btn-primary {
-  display: inline-block;
-  background-color: #007bff;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
 }
 </style>

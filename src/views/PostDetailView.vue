@@ -1,62 +1,66 @@
 <template>
-  <div>
-    <button @click="goBack" style="margin-bottom: 20px">&larr; Back to Feed</button>
+  <div class="post-detail-container">
+    <button class="aqua-btn" @click="goBack" style="margin-bottom: 20px">&larr; BACK TO FEED</button>
 
-    <div v-if="loading">Loading post...</div>
+    <div v-if="loading" class="lcd-screen" style="padding: 20px;">
+      <p class="digital-label">SYS_STATUS: LOADING...</p>
+    </div>
 
     <div v-else-if="post">
-      <div style="border: 2px solid black; padding: 15px; margin-bottom: 20px">
+      <div class="cyber-panel" style="padding: 15px; margin-bottom: 20px">
         <p>
-          <strong>{{ post.authorName }}</strong>
-          <small> - {{ formatDate(post.created) }}</small>
+          <strong style="color: var(--crt-orange-1);">USER: {{ post.authorName }}</strong>
+          <span class="digital-label" style="margin-left: 10px;">{{ formatDate(post.created) }}</span>
         </p>
-        <p style="font-size: 1.2em">{{ post.textContent }}</p>
+        <p style="font-size: 1.2em; color: #eee; margin: 15px 0;">{{ post.textContent }}</p>
 
-        <ImageCarousel :images="post.imageUrls" />
+        <ImageCarousel :images="post.imageUrls" class="acrylic-glass" />
       </div>
 
-      <div v-if="canCreatePost">
-        <h3>Add a Comment</h3>
+      <div v-if="canCreatePost" class="cyber-panel" style="padding: 15px; margin-bottom: 20px;">
+        <h3 class="chrome-text">Add a Comment</h3>
         <form @submit.prevent="submitComment">
           <textarea
             v-model="newCommentContent"
+            class="cyber-input"
             placeholder="Write a comment..."
             rows="3"
-            cols="50"
+            style="width: 100%; box-sizing: border-box;"
             required
           ></textarea>
           <br />
-          <button type="submit">Post Comment</button>
+          <button type="submit" class="aqua-btn" style="margin-top: 10px;">Post Comment</button>
         </form>
       </div>
 
-      <hr />
+      <hr style="border-color: #555; margin: 20px 0;" />
 
       <div>
-        <h3>Comments</h3>
-        <div v-if="comments.length === 0">No comments yet. Be the first!</div>
+        <h3 class="chrome-text">Comments</h3>
+        <div v-if="comments.length === 0" class="lcd-screen" style="padding: 15px;">
+          <p>[NO_DATA] No comments yet. Be the first!</p>
+        </div>
 
         <div
           v-for="comment in comments"
           :key="comment.id"
+          class="lcd-screen"
           style="
-            border: 1px solid gray;
             margin-bottom: 10px;
             padding: 10px;
-            background-color: #f9f9f9;
           "
         >
-          <p>
-            <strong>{{ comment.authorName }}</strong>
-            <small> - {{ formatDate(comment.created) }}</small>
+          <p style="margin: 0 0 5px 0;">
+            <strong style="color: var(--crt-orange-2);">{{ comment.authorName }}</strong>
+            <small class="digital-label" style="margin-left: 10px; font-size: 0.7em;">{{ formatDate(comment.created) }}</small>
           </p>
-          <p>{{ comment.content }}</p>
+          <p style="margin: 0; color: #ccc;">{{ comment.content }}</p>
         </div>
       </div>
     </div>
 
-    <div v-else>
-      <p>Error: Post could not be found.</p>
+    <div v-else class="lcd-screen" style="padding: 20px;">
+      <p class="digital-label" style="color: red; border-color: red;">ERR: POST_NOT_FOUND</p>
     </div>
   </div>
 </template>
@@ -186,3 +190,11 @@ onMounted(() => {
   fetchPostAndComments()
 })
 </script>
+
+<style scoped>
+.post-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+</style>

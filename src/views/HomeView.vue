@@ -1,8 +1,8 @@
 <template>
   <main class="main-view-container">
-    <header class="page-header">
-      <h1>Wood Hill Ward Home</h1>
-      <p class="subtitle">Upcoming Activities & Announcements</p>
+    <header class="page-header cyber-panel">
+      <h1 class="chrome-text">Wood Hill Ward Home</h1>
+      <p class="subtitle digital-label">Upcoming Activities & Announcements</p>
     </header>
 
     <section class="calendar-section">
@@ -15,58 +15,58 @@
       <RecentAnnouncements />
     </section>
 
-    <section class="info-section">
-      <h2>Ward Family</h2>
+    <section class="info-section cyber-panel">
+      <h2 class="chrome-text">Ward Family</h2>
       <div class="card-grid">
-        <router-link to="/feed" class="info-card link-card">
-          <h3>Ward Scrapbook</h3>
+        <router-link to="/feed" class="info-card link-card lcd-screen">
+          <h3 style="color: var(--liquid-cyan);">Ward Scrapbook</h3>
           <p>View photos from recent activities and ward parties!</p>
         </router-link>
-        <a href="https://youtube.com/@woodhillwardnsl" target="_blank" class="info-card link-card">
-          <h3>Ward YouTube</h3>
+        <a href="https://youtube.com/@woodhillwardnsl" target="_blank" class="info-card link-card lcd-screen">
+          <h3 style="color: var(--liquid-cyan);">Ward YouTube</h3>
           <p>Watch sacrament meeting broadcasts and devotional videos.</p>
         </a>
       </div>
     </section>
 
-    <section class="info-section">
-      <h2>Building Info</h2>
+    <section class="info-section cyber-panel">
+      <h2 class="chrome-text">Building Info</h2>
       <div class="card-grid">
-        <div class="info-card interactive-card" @click="openLightbox('/src/assets/ward-boundaries.png')">
-          <h3>Ward Boundaries</h3>
-          <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail" />
-          <p class="click-hint">Tap to expand map</p>
+        <div class="info-card interactive-card lcd-screen" @click="openLightbox('/src/assets/ward-boundaries.png')">
+          <h3 style="color: var(--liquid-cyan);">Ward Boundaries</h3>
+          <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail acrylic-glass" />
+          <p class="click-hint digital-label">TAP TO EXPAND</p>
         </div>
-        <div class="info-card interactive-card" @click="openLightbox('/src/assets/building-map.png')">
-          <h3>Building Layout</h3>
-          <img src="/src/assets/building-map.png" alt="Layout map of the ward building" class="thumbnail" />
-          <p class="click-hint">Tap to expand map</p>
+        <div class="info-card interactive-card lcd-screen" @click="openLightbox('/src/assets/building-map.png')">
+          <h3 style="color: var(--liquid-cyan);">Building Layout</h3>
+          <img src="/src/assets/building-map.png" alt="Layout map of the ward building" class="thumbnail acrylic-glass" />
+          <p class="click-hint digital-label">TAP TO EXPAND</p>
         </div>
       </div>
     </section>
 
-    <section class="info-section">
-      <h2>Ward Leaders</h2>
+    <section class="info-section cyber-panel">
+      <h2 class="chrome-text">Ward Leaders</h2>
       <div class="contact-list">
-        <div class="contact-item">
-          <strong>Bishopric</strong>
+        <div class="contact-item lcd-screen">
+          <strong style="color: var(--crt-orange-1);">Bishopric</strong>
           <p>Bishop Aaron Smith: (555) 123-4567</p>
           <p>1st Counselor David Jones: (555) 987-6543</p>
         </div>
-        <div class="contact-item">
-          <strong>Relief Society</strong>
+        <div class="contact-item lcd-screen">
+          <strong style="color: var(--crt-orange-1);">Relief Society</strong>
           <p>President Sarah Jenkins: (555) 321-7654</p>
         </div>
-        <div class="contact-item">
-          <strong>Elders Quorum</strong>
+        <div class="contact-item lcd-screen">
+          <strong style="color: var(--crt-orange-1);">Elders Quorum</strong>
           <p>President Michael Chang: (555) 654-3210</p>
         </div>
       </div>
     </section>
 
     <div v-if="expandedImage" class="lightbox-overlay" @click="closeLightbox">
-      <button class="close-btn" @click.stop="closeLightbox">&times;</button>
-      <img :src="expandedImage" alt="Expanded view" class="expanded-img" @click.stop />
+      <button class="close-btn" @click.stop="closeLightbox">[ X ]</button>
+      <img :src="expandedImage" alt="Expanded view" class="expanded-img acrylic-glass" @click.stop />
     </div>
   </main>
 </template>
@@ -95,20 +95,14 @@ const closeLightbox = () => {
 </script>
 
 <style scoped>
-/* Mobile-first styling conforming to the Design Document */
+/* Y2K Styling */
 .main-view-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 1rem;
-  font-family: sans-serif;
-  color: #2c3e50;
 }
 
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eaeaea;
 }
 
 .page-header h1 {
@@ -116,16 +110,7 @@ const closeLightbox = () => {
   margin: 0 0 0.5rem 0;
 }
 
-.subtitle {
-  color: #656565;
-  font-size: 1.1rem;
-  margin: 0;
-}
-
 .calendar-section {
-  /* Adds a subtle container around the calendar area if desired */
-  background: #ffffff;
-  border-radius: 8px;
   margin-bottom: 2rem;
 }
 
@@ -135,7 +120,7 @@ const closeLightbox = () => {
 
 .info-section h2 {
   font-size: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -154,9 +139,6 @@ const closeLightbox = () => {
 }
 
 .info-card {
-  background: #f9f9f9;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
   padding: 1rem;
   text-align: center;
 }
@@ -170,17 +152,16 @@ const closeLightbox = () => {
 /* Link Cards */
 .link-card {
   text-decoration: none;
-  color: inherit;
   display: block;
-  transition: background-color 0.2s ease;
 }
 
 .link-card:hover {
-  background-color: #f0f0f0;
+  border-color: var(--liquid-cyan);
+  box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.4);
 }
 
 .link-card p {
-  color: #666;
+  color: #ccc;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -188,27 +169,18 @@ const closeLightbox = () => {
 /* Map Cards */
 .interactive-card {
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
 .interactive-card:hover {
-  background-color: #f0f0f0;
+  border-color: var(--liquid-cyan);
+  box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.4);
 }
 
 .thumbnail {
   width: 100%;
   max-height: 150px;
   object-fit: cover;
-  border-radius: 4px;
   margin-bottom: 0.5rem;
-  border: 1px solid #ddd;
-}
-
-.click-hint {
-  font-size: 0.85rem;
-  color: #007bff;
-  margin: 0;
-  font-weight: bold;
 }
 
 /* Contact List */
@@ -219,10 +191,7 @@ const closeLightbox = () => {
 }
 
 .contact-item {
-  background: #f9f9f9;
   padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #eaeaea;
 }
 
 .contact-item strong {
@@ -233,7 +202,7 @@ const closeLightbox = () => {
 
 .contact-item p {
   margin: 0.25rem 0;
-  color: #555;
+  color: #ccc;
 }
 
 /* Lightbox Overlay Styles */
@@ -254,8 +223,6 @@ const closeLightbox = () => {
 .expanded-img {
   max-width: 90%;
   max-height: 90%;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .close-btn {
@@ -264,13 +231,15 @@ const closeLightbox = () => {
   right: 30px;
   background: none;
   border: none;
-  color: white;
-  font-size: 3rem;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   line-height: 1;
 }
 
 .close-btn:hover {
-  color: #ddd;
+  color: #fff;
 }
 </style>

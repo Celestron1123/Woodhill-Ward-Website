@@ -1,35 +1,31 @@
 <template>
-  <div>
-    <h2>Ward Sign Up</h2>
+  <div class="cyber-panel" style="max-width: 500px; margin: 0 auto;">
+    <h2 class="chrome-text">Ward Sign Up</h2>
 
     <form @submit.prevent="handleSignUp">
-      <div>
-        <label for="username">Username: </label>
-        <input type="text" id="username" v-model="username" required />
+      <div style="margin-bottom: 15px;">
+        <label for="username" class="digital-label" style="display: block; margin-bottom: 5px;">USERNAME:</label>
+        <input type="text" id="username" v-model="username" class="cyber-input" style="width: 100%; box-sizing: border-box;" required />
       </div>
 
-      <br />
-
-      <div>
-        <label for="email">Email: </label>
-        <input type="email" id="email" v-model="email" required />
+      <div style="margin-bottom: 15px;">
+        <label for="email" class="digital-label" style="display: block; margin-bottom: 5px;">EMAIL:</label>
+        <input type="email" id="email" v-model="email" class="cyber-input" style="width: 100%; box-sizing: border-box;" required />
       </div>
 
-      <br />
-
-      <div>
-        <label for="password">Password: </label>
-        <input type="password" id="password" v-model="password" required />
+      <div style="margin-bottom: 15px;">
+        <label for="password" class="digital-label" style="display: block; margin-bottom: 5px;">PASSWORD:</label>
+        <input type="password" id="password" v-model="password" class="cyber-input" style="width: 100%; box-sizing: border-box;" required />
       </div>
 
-      <br />
-
-      <button type="submit">Create Account</button>
+      <button type="submit" class="aqua-btn" style="width: 100%;">Create Account</button>
     </form>
 
-    <hr />
-    <p>Already have an account?</p>
-    <button @click="goToLogin">Log In Here</button>
+    <hr style="border-color: #555; margin: 20px 0;" />
+    <p style="color: #ccc; text-align: center;">Already have an account?</p>
+    <div style="text-align: center;">
+      <button @click="goToLogin" class="aqua-btn" style="background: var(--titanium-2);">Log In Here</button>
+    </div>
   </div>
 </template>
 

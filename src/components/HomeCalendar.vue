@@ -1,30 +1,34 @@
 <template>
-  <div class="calendar-wrapper">
-    <v-calendar
-      expanded
-      title-position="left"
-      :attributes="calendarAttributes"
-      @dayclick="onDayClick"
-    />
+  <div class="calendar-wrapper cyber-panel">
+    <div style="background: #111; padding: 10px; border: 2px solid #444; border-bottom-color: #eee; border-right-color: #eee;">
+      <v-calendar
+        expanded
+        title-position="left"
+        :attributes="calendarAttributes"
+        @dayclick="onDayClick"
+        class="lcd-screen"
+        style="background: transparent; border: none; box-shadow: none;"
+      />
+    </div>
 
     <div class="event-list">
-      <h2 class="date-header">Activities for {{ formattedSelectedDate }}</h2>
+      <h2 class="date-header chrome-text">SYS_DATE: {{ formattedSelectedDate }}</h2>
 
-      <div v-if="selectedEvents.length === 0" class="empty-state">
-        <p>No activities scheduled for this day.</p>
+      <div v-if="selectedEvents.length === 0" class="empty-state lcd-screen">
+        <p>[NO_DATA] No activities scheduled for this day.</p>
       </div>
 
-      <div v-else v-for="event in selectedEvents" :key="event.id" class="event-card">
+      <div v-else v-for="(event, index) in selectedEvents" :key="event.id" class="event-card cyber-panel">
         <div class="event-header">
-          <h3 class="event-title">{{ event.title }}</h3>
-          <span class="event-time">{{ formatTime(event['date']) }}</span>
+          <h3 class="event-title" style="color: var(--liquid-cyan);">{{ event.title }}</h3>
+          <span class="event-time digital-label">{{ formatTime(event['date']) }}</span>
         </div>
         <div class="event-tags" v-if="event.tags && event.tags.length">
           <span
             v-for="tag in event.tags"
             :key="tag"
-            class="tag-pill"
-            :style="{ backgroundColor: getTagColor(tag) }"
+            class="jumper-pill"
+            :style="{ borderTopColor: getTagColor(tag), borderLeftColor: getTagColor(tag) }"
           >
             {{ tag === 'all' ? 'All' : tag }}
           </span>
@@ -70,13 +74,13 @@ const TAG_COLORS = {
 }
 
 const PASTEL_COLORS = {
-  'Young Women': '#ffa6da',
-  'Young Men': '#bae1ff',
-  'Relief Society': '#d5baff',
-  'Elders Quorum': '#baffc9',
-  Primary: '#ffd8b1',
-  'Sunday School': '#ffffba',
-  all: '#ffb3b3',
+  'Young Women': '#ff52c5',
+  'Young Men': '#52a3ff',
+  'Relief Society': '#9e52ff',
+  'Elders Quorum': '#52ff88',
+  Primary: '#ffa452',
+  'Sunday School': '#ffea52',
+  all: '#ff5252',
 }
 
 // 3. Map Firestore data to VCalendar Attributes
@@ -149,11 +153,10 @@ const getTagColor = (tag) => {
 </script>
 
 <style scoped>
-/* Mobile-first, readable styles adhering to the Design Document */
+/* PDA Aesthetic */
 .calendar-wrapper {
   max-width: 600px;
   margin: 0 auto;
-  padding: 1rem;
 }
 
 .event-list {
@@ -163,23 +166,20 @@ const getTagColor = (tag) => {
 .date-header {
   font-size: 1.25rem;
   font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
 
 .empty-state {
-  color: #666;
-  font-style: italic;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
   font-size: 1.1rem;
 }
 
 .event-card {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.25rem;
   margin-bottom: 1rem;
+  padding: 1.25rem;
 }
 
 .event-header {
@@ -187,18 +187,13 @@ const getTagColor = (tag) => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
 }
 
 .event-title {
   font-size: 1.3rem;
   margin: 0;
-  color: #2c3e50;
-}
-
-.event-time {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #666;
 }
 
 .event-tags {
@@ -208,18 +203,10 @@ const getTagColor = (tag) => {
   margin-bottom: 0.75rem;
 }
 
-.tag-pill {
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  color: #333;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
 .event-description {
   font-size: 1.1rem;
   line-height: 1.5;
   margin: 0;
-  color: #4a4a4a;
+  color: #eee;
 }
 </style>

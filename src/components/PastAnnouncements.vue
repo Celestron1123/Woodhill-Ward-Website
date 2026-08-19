@@ -1,18 +1,21 @@
 <template>
-  <button class="action-btn" @click="openModal">See all past announcements</button>
+  <button class="action-btn aqua-btn" @click="openModal">See all past announcements</button>
 
   <Teleport to="body">
     <div v-if="isOpen" class="lightbox-overlay" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <button class="close-btn" @click="closeModal" aria-label="Close modal">&times;</button>
-        <h2>Past Announcements</h2>
+      <div class="modal-content cyber-panel" @click.stop>
+        <button class="close-btn" @click="closeModal" aria-label="Close modal">[ X ]</button>
+        <h2 class="chrome-text">Past Announcements</h2>
 
         <div class="scrollable-content">
-          <div v-if="announcements.length === 0" class="empty-state">
+          <div v-if="announcements.length === 0" class="empty-state digital-label">
             <p>No announcements found.</p>
           </div>
-          <div v-else v-for="ann in announcements" :key="ann.id" class="announcement-card">
-            <h3>{{ ann.title }}</h3>
+          <div v-else v-for="(ann, index) in announcements" :key="ann.id" class="announcement-card lcd-screen">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+              <h3 style="color: var(--liquid-cyan); margin: 0;">{{ ann.title }}</h3>
+              <span class="digital-label">ARCHIVE_0{{ index + 1 }}</span>
+            </div>
             <span class="date">{{ formatDate(ann.created) }}</span>
             <p>{{ ann.content }}</p>
           </div>
@@ -53,22 +56,6 @@ const formatDate = (timestamp) => {
 </script>
 
 <style scoped>
-.action-btn {
-  background-color: #f8f9fa;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-  background-color: #e2e6ea;
-}
-
 .lightbox-overlay {
   position: fixed;
   top: 0;
@@ -83,16 +70,14 @@ const formatDate = (timestamp) => {
 }
 
 .modal-content {
-  background: white;
   padding: 2rem;
-  border-radius: 8px;
   width: 90%;
   max-width: 600px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), var(--bevel-inset);
 }
 
 .close-btn {
@@ -101,24 +86,23 @@ const formatDate = (timestamp) => {
   right: 20px;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  color: #666;
-  line-height: 1;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
 }
 
 .close-btn:hover {
-  color: #000;
+  color: #fff;
 }
 
 .modal-content h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
   flex-shrink: 0;
-  color: #2c3e50;
-  padding-right: 2rem; /* Make room for X */
 }
 
 .scrollable-content {
@@ -127,54 +111,41 @@ const formatDate = (timestamp) => {
   padding-right: 0.5rem;
 }
 
-/* Custom scrollbar for better aesthetics */
+/* Custom scrollbar */
 .scrollable-content::-webkit-scrollbar {
   width: 8px;
 }
 .scrollable-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+  background: #111;
+  border: 1px solid #333;
 }
 .scrollable-content::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #555;
   border-radius: 4px;
 }
 .scrollable-content::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: #777;
 }
 
 .empty-state {
-  color: #666;
-  font-style: italic;
   text-align: center;
   margin-top: 2rem;
 }
 
 .announcement-card {
-  border: 1px solid #eaeaea;
-  border-left: 4px solid #007bff;
-  border-radius: 6px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  background: #fafafa;
-}
-
-.announcement-card h3 {
-  margin: 0 0 0.5rem 0;
-  color: #2c3e50;
-  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .date {
   display: block;
-  color: #7f8c8d;
+  color: #888;
   font-size: 0.9rem;
   margin-bottom: 0.75rem;
 }
 
 .announcement-card p {
   margin: 0;
-  color: #4a4a4a;
+  color: #eee;
   line-height: 1.6;
   white-space: pre-wrap;
 }

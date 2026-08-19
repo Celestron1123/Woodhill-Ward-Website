@@ -1,27 +1,27 @@
 <template>
-  <div class="user-management-container">
-    <h2>User Management</h2>
+  <div class="user-management-container cyber-panel">
+    <h2 class="chrome-text">User Management</h2>
 
-    <div v-if="isLoading">
-      <p>Loading users...</p>
+    <div v-if="isLoading" class="lcd-screen" style="padding: 10px;">
+      <p class="digital-label">Loading users...</p>
     </div>
-    <div v-else-if="users.length === 0">
-      <p>No users to manage.</p>
+    <div v-else-if="users.length === 0" class="lcd-screen" style="padding: 10px;">
+      <p class="digital-label">[NO_DATA] No users to manage.</p>
     </div>
     <div v-else>
       <table class="users-table">
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Current Role</th>
-            <th>Actions</th>
+            <th class="digital-label" style="background:none; border:none; padding-bottom: 10px; color: var(--liquid-cyan); font-size: 1rem;">USERNAME</th>
+            <th class="digital-label" style="background:none; border:none; padding-bottom: 10px; color: var(--liquid-cyan); font-size: 1rem;">EMAIL</th>
+            <th class="digital-label" style="background:none; border:none; padding-bottom: 10px; color: var(--liquid-cyan); font-size: 1rem;">CURRENT ROLE</th>
+            <th class="digital-label" style="background:none; border:none; padding-bottom: 10px; color: var(--liquid-cyan); font-size: 1rem;">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
+          <tr v-for="user in users" :key="user.id" class="lcd-screen">
+            <td style="color: #eee;">{{ user.username }}</td>
+            <td style="color: #aaa;">{{ user.email }}</td>
             <td>
               <span :class="['role-badge', user.role]" :title="getTooltip(user.role)">
                 {{ user.role }}
@@ -32,6 +32,7 @@
                 v-model="user.selectedRole"
                 @change="updateRole(user, user.selectedRole)"
                 :disabled="!canModify(user)"
+                class="cyber-input"
               >
                 <option v-for="role in getAvailableRoles(user)" :key="role" :value="role">
                   {{ role }}
@@ -169,24 +170,23 @@ const updateRole = async (user, newRole) => {
   max-width: 800px;
   margin: 2rem auto;
   padding: 1rem;
-  font-family: sans-serif;
 }
 
 .users-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
-}
-
-.users-table th,
-.users-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
+  border-spacing: 0 10px;
 }
 
 .users-table th {
-  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.users-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #222;
 }
 
 .role-badge {
@@ -195,37 +195,46 @@ const updateRole = async (user, newRole) => {
   font-weight: bold;
   text-transform: capitalize;
   cursor: help;
+  font-family: 'Lucida Console', monospace;
+  font-size: 0.85rem;
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.8);
+  border: 1px solid #111;
+  border-bottom-color: #555;
+  border-right-color: #555;
 }
 
-/* Pastel rainbow colors (cool for low, hot for high) */
+/* Y2K neon colors */
 .role-badge.viewer {
-  background-color: #b3cde0; /* Light blue */
-  color: #011f4b;
+  background-color: #0055ea;
+  color: #fff;
 }
 
 .role-badge.verified {
-  background-color: #c5e1a5; /* Light green */
-  color: #33691e;
+  background-color: #00e676;
+  color: #000;
 }
 
 .role-badge.mod {
-  background-color: #fff59d; /* Light yellow */
-  color: #f57f17;
+  background-color: #ffb703;
+  color: #000;
 }
 
 .role-badge.admin {
-  background-color: #ffcc80; /* Light orange */
-  color: #e65100;
+  background-color: #ff7700;
+  color: #fff;
 }
 
 .role-badge.dev {
-  background-color: #ef9a9a; /* Light red */
-  color: #b71c1c;
+  background-color: #ff0055;
+  color: #fff;
 }
 
 select {
   padding: 6px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  cursor: pointer;
+}
+select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

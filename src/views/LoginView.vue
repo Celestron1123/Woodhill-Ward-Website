@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <h2>Ward Log In</h2>
+  <div class="cyber-panel" style="max-width: 500px; margin: 0 auto;">
+    <h2 class="chrome-text">Ward Log In</h2>
 
     <form @submit.prevent="handleLogin">
-      <div>
-        <label for="email">Email: </label>
-        <input type="email" id="email" v-model="email" required />
+      <div style="margin-bottom: 15px;">
+        <label for="email" class="digital-label" style="display: block; margin-bottom: 5px;">EMAIL:</label>
+        <input type="email" id="email" v-model="email" class="cyber-input" style="width: 100%; box-sizing: border-box;" required />
       </div>
 
-      <br />
-
-      <div>
-        <label for="password">Password: </label>
-        <input type="password" id="password" v-model="password" required />
+      <div style="margin-bottom: 15px;">
+        <label for="password" class="digital-label" style="display: block; margin-bottom: 5px;">PASSWORD:</label>
+        <input type="password" id="password" v-model="password" class="cyber-input" style="width: 100%; box-sizing: border-box;" required />
       </div>
 
-      <br />
-
-      <button type="submit">Log In</button>
+      <button type="submit" class="aqua-btn" style="width: 100%;">Log In</button>
     </form>
 
-    <hr />
+    <hr style="border-color: #555; margin: 20px 0;" />
 
-    <p>Don't have an account?</p>
-    <button @click="goToSignUp">Sign Up Here</button>
+    <p style="color: #ccc; text-align: center;">Don't have an account?</p>
+    <div style="text-align: center;">
+      <button @click="goToSignUp" class="aqua-btn" style="background: var(--titanium-2);">Sign Up Here</button>
+    </div>
   </div>
 </template>
 

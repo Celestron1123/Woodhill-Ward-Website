@@ -1,14 +1,17 @@
 <template>
-  <div class="recent-announcements-wrapper">
-    <h2 class="section-header">Recent Announcements</h2>
+  <div class="recent-announcements-wrapper cyber-panel">
+    <h2 class="section-header chrome-text">Recent Announcements</h2>
 
-    <div v-if="recentAnnouncement" class="recent-card">
-      <h3 class="title">{{ recentAnnouncement.title }}</h3>
+    <div v-if="recentAnnouncement" class="recent-card lcd-screen">
+      <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+        <h3 class="title" style="color: var(--liquid-cyan); margin: 0;">{{ recentAnnouncement.title }}</h3>
+        <span class="digital-label">BCAST_01</span>
+      </div>
       <span class="date">{{ formatDate(recentAnnouncement.created) }}</span>
       <p class="content">{{ recentAnnouncement.content }}</p>
     </div>
-    <div v-else class="empty-state">
-      <p>No recent announcements</p>
+    <div v-else class="empty-state lcd-screen">
+      <p>No recent announcements. [SYS_IDLE]</p>
     </div>
 
     <div class="action-buttons">
@@ -56,55 +59,43 @@ const formatDate = (timestamp) => {
 
 <style scoped>
 .recent-announcements-wrapper {
-  /* Using max-width matching the upcoming events or home content */
   max-width: 600px;
   margin: 2.5rem auto 2.5rem auto;
-  padding: 1rem;
-  /* Optional visual grouping, though simple works best */
 }
 
 .section-header {
   font-size: 1.25rem;
-  font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
-  color: #2c3e50;
   margin-top: 0;
 }
 
 .empty-state {
-  color: #666;
-  font-style: italic;
+  color: var(--crt-orange-1);
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
+  font-family: 'Lucida Console', monospace;
 }
 
 .recent-card {
-  background: #f9f9f9;
-  border: 1px solid #eaeaea;
-  border-left: 4px solid #007bff;
-  padding: 1.5rem;
-  border-radius: 6px;
   margin-bottom: 1.5rem;
 }
 
 .title {
   font-size: 1.3rem;
-  margin: 0 0 0.5rem 0;
-  color: #2c3e50;
 }
 
 .date {
   display: block;
-  color: #7f8c8d;
+  color: #666;
   font-size: 0.95rem;
   margin-bottom: 1rem;
 }
 
 .content {
   margin: 0;
-  color: #4a4a4a;
+  color: #eee;
   line-height: 1.6;
   white-space: pre-wrap;
 }

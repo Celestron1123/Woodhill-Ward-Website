@@ -1,25 +1,27 @@
 <template>
   <div>
-    <h2>Ward Feed</h2>
-    <p>Welcome to the ward website!</p>
+    <h2 class="chrome-text">Ward Feed</h2>
+    <p>Welcome to the ward website! [NODE_COMM_ACTIVE]</p>
 
-    <hr />
+    <hr style="border-color: #555;" />
 
-    <div v-if="canCreatePost">
-      <h3>Create a Post</h3>
+    <div v-if="canCreatePost" class="cyber-panel">
+      <h3><span class="digital-label">SYS_INPUT // CREATE_POST</span></h3>
       <form @submit.prevent="submitPost">
         <textarea
           v-model="newPostContent"
+          class="cyber-input"
           placeholder="What's going on in the ward?"
           rows="4"
-          cols="50"
+          style="width: 100%; box-sizing: border-box; margin-bottom: 10px;"
           required
         ></textarea>
-        <br />
-        <button type="button" @click="openCloudinaryWidget" style="margin-right: 10px">
-          📷 Add Photos
-        </button>
-        <button type="submit">Post</button>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button type="button" class="aqua-btn" @click="openCloudinaryWidget">
+            📷 Add Photos
+          </button>
+          <button type="submit" class="aqua-btn">Post</button>
+        </div>
 
         <div
           v-if="imageUrls.length > 0"
@@ -29,7 +31,8 @@
             <img
               :src="url"
               alt="Preview"
-              style="height: 80px; width: 80px; object-fit: cover; border-radius: 8px"
+              class="acrylic-glass"
+              style="height: 80px; width: 80px; object-fit: cover;"
             />
             <button
               type="button"
@@ -40,9 +43,11 @@
                 right: -5px;
                 background: red;
                 color: white;
-                border: none;
+                border: 2px solid white;
                 border-radius: 50%;
                 cursor: pointer;
+                font-weight: bold;
+                box-shadow: 2px 2px 5px rgba(0,0,0,0.8);
               "
             >
               X
@@ -52,35 +57,43 @@
       </form>
     </div>
 
-    <hr />
+    <hr style="border-color: #555;" />
 
-    <div style="margin-bottom: 20px;">
-      <h3>Search Posts by Hashtag</h3>
-      <input 
-        v-model="searchQuery" 
-        @keyup.enter="handleSearch" 
-        placeholder="Search tags (e.g. #ReliefSociety)" 
-        style="padding: 5px; margin-right: 10px;"
-      />
-      <button @click="handleSearch" style="margin-right: 5px;">Search</button>
-      <button v-if="isSearching" @click="clearSearch">Clear</button>
+    <div class="cyber-panel">
+      <h3><span class="digital-label">QUERY // HASHTAGS</span></h3>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <input 
+          v-model="searchQuery" 
+          @keyup.enter="handleSearch" 
+          class="cyber-input"
+          placeholder="Search tags (e.g. #ReliefSociety)" 
+          style="flex-grow: 1; max-width: 300px;"
+        />
+        <button @click="handleSearch" class="aqua-btn">Search</button>
+        <button v-if="isSearching" @click="clearSearch" class="aqua-btn" style="background: var(--crt-orange-2);">Clear</button>
+      </div>
     </div>
 
     <div>
-      <h3>Recent Posts</h3>
-      <div v-if="posts.length === 0">No posts yet. Be the first to share!</div>
+      <h3 class="chrome-text">Recent Posts</h3>
+      <div v-if="posts.length === 0">No posts yet. [DB_EMPTY]</div>
 
       <div
-        v-for="post in posts"
+        v-for="(post, index) in posts"
         :key="post.id"
-        style="border: 1px solid black; margin-bottom: 10px; padding: 10px"
+        class="cyber-panel lcd-screen"
+        style="margin-bottom: 20px;"
       >
-        <p>
-          <strong>{{ post.authorName }}</strong>
-          <small> - {{ formatDate(post.created) }}</small>
-        </p>
-        <p style="white-space: pre-wrap; margin: 10px 0;">
-          <template v-for="(token, index) in parseTextContent(post.textContent)" :key="index">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+          <p style="margin: 0;">
+            <strong style="color: var(--crt-orange-1);">USER: {{ post.authorName }}</strong>
+            <small style="color: #666;"> - {{ formatDate(post.created) }}</small>
+          </p>
+          <span class="digital-label">POST_0{{ index + 1 }}</span>
+        </div>
+        
+        <p style="white-space: pre-wrap; margin: 10px 0; color: #fff;">
+          <template v-for="(token, idx) in parseTextContent(post.textContent)" :key="idx">
             <span 
               v-if="token.type === 'hashtag'" 
               class="hashtag" 
@@ -92,27 +105,27 @@
           </template>
         </p>
 
-        <ImageCarousel :images="post.imageUrls" />
+        <ImageCarousel :images="post.imageUrls" class="acrylic-glass" v-if="post.imageUrls && post.imageUrls.length" />
 
         <div
           v-if="post.latestComment"
-          style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed gray"
+          style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #444;"
         >
-          <p style="margin: 0">
+          <p style="margin: 0; color: #aaa;">
             <small
-              ><strong>{{ post.latestComment.authorName }}</strong
+              ><strong style="color: var(--liquid-cyan);">{{ post.latestComment.authorName }}</strong
               >: {{ post.latestComment.content }}</small
             >
           </p>
         </div>
 
-        <button @click="goToPost(post.id)" style="margin-top: 10px">Comment</button>
+        <button @click="goToPost(post.id)" class="aqua-btn" style="margin-top: 15px; font-size: 0.8rem;">[ RESPOND ]</button>
       </div>
     </div>
 
-    <hr />
+    <hr style="border-color: #555;" />
 
-    <button @click="handleSignOut">Log Out</button>
+    <button @click="handleSignOut" class="aqua-btn" style="background: #a00;">Log Out</button>
   </div>
 </template>
 
@@ -345,10 +358,12 @@ onMounted(() => {
   font-weight: bold;
   cursor: pointer;
   transition: color 0.2s;
+  text-shadow: 0 0 5px rgba(29, 161, 242, 0.5);
 }
 
 .hashtag:hover {
   text-decoration: underline;
   color: #0c85d0;
+  text-shadow: 0 0 10px rgba(29, 161, 242, 0.8);
 }
 </style>

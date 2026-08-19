@@ -1,45 +1,46 @@
 <template>
   <div class="create-event-wrapper">
-    <button class="create-event-btn" @click="openEventModal">Create Event</button>
+    <button class="create-event-btn aqua-btn" @click="openEventModal">Create Event</button>
   </div>
 
   <Teleport to="body">
     <div v-if="isEventModalOpen" class="lightbox-overlay" @click="closeEventModal">
-      <div class="event-modal-content" @click.stop>
-        <h2>Create Event</h2>
+      <div class="event-modal-content cyber-panel" @click.stop>
+        <button class="close-btn" @click="closeEventModal" aria-label="Close modal">[ X ]</button>
+        <h2 class="chrome-text">Create Event</h2>
         <table class="event-form-table">
           <tbody>
             <tr>
-              <td><label for="event-title">Title:</label></td>
-              <td><input id="event-title" type="text" v-model="eventForm.title" /></td>
+              <td><label for="event-title" class="digital-label">TITLE:</label></td>
+              <td><input id="event-title" type="text" v-model="eventForm.title" class="cyber-input" /></td>
             </tr>
             <tr>
-              <td><label for="event-date">Date:</label></td>
-              <td><input id="event-date" type="date" v-model="eventForm.date" /></td>
+              <td><label for="event-date" class="digital-label">DATE:</label></td>
+              <td><input id="event-date" type="date" v-model="eventForm.date" class="cyber-input" /></td>
             </tr>
             <tr>
-              <td><label for="event-time">Time:</label></td>
-              <td><input id="event-time" type="time" v-model="eventForm.time" /></td>
+              <td><label for="event-time" class="digital-label">TIME:</label></td>
+              <td><input id="event-time" type="time" v-model="eventForm.time" class="cyber-input" /></td>
             </tr>
             <tr>
-              <td><label>Tags:</label></td>
+              <td><label class="digital-label">TAGS:</label></td>
               <td class="tags-container">
                 <label v-for="tag in AVAILABLE_TAGS" :key="tag" class="tag-checkbox">
                   <input type="checkbox" :value="tag" v-model="eventForm.tags" />
-                  {{ tag }}
+                  <span style="color: #eee;">{{ tag }}</span>
                 </label>
               </td>
             </tr>
             <tr>
-              <td><label for="event-description">Description:</label></td>
-              <td><textarea id="event-description" v-model="eventForm.description"></textarea></td>
+              <td><label for="event-description" class="digital-label">DETAILS:</label></td>
+              <td><textarea id="event-description" v-model="eventForm.description" class="cyber-input"></textarea></td>
             </tr>
           </tbody>
         </table>
-        <p v-if="formError" class="error-text">Required info missing</p>
+        <p v-if="formError" class="error-text">ERR: Required info missing</p>
         <div class="modal-actions">
-          <button class="cancel-btn" @click="closeEventModal">Cancel</button>
-          <button class="submit-btn" @click="submitEvent">Submit</button>
+          <button class="cancel-btn aqua-btn" @click="closeEventModal" style="background: #555;">Cancel</button>
+          <button class="submit-btn aqua-btn" @click="submitEvent" style="background: var(--bio-green-2); color: #000;">Submit</button>
         </div>
       </div>
     </div>
@@ -119,21 +120,6 @@ const submitEvent = async () => {
   margin: 1rem 0 2rem 0;
 }
 
-.create-event-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.create-event-btn:hover {
-  background-color: #0056b3;
-}
-
 .lightbox-overlay {
   position: fixed;
   top: 0;
@@ -148,18 +134,37 @@ const submitEvent = async () => {
 }
 
 .event-modal-content {
-  background: white;
   padding: 2rem;
-  border-radius: 8px;
   min-width: 300px;
   max-width: 90%;
+  width: 500px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8), var(--bevel-inset);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
+}
+
+.close-btn:hover {
+  color: #fff;
 }
 
 .event-modal-content h2 {
   margin-top: 0;
   margin-bottom: 1rem;
-  border-bottom: 2px solid #eaeaea;
+  border-bottom: 2px solid #555;
   padding-bottom: 0.5rem;
+  color: #eee;
 }
 
 .event-form-table {
@@ -198,10 +203,6 @@ const submitEvent = async () => {
 .event-form-table input,
 .event-form-table textarea {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
   box-sizing: border-box;
 }
 
@@ -211,43 +212,21 @@ const submitEvent = async () => {
 }
 
 .error-text {
-  color: #dc3545;
+  color: var(--crt-orange-1);
+  font-family: 'Lucida Console', monospace;
   font-weight: bold;
   margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  background: #000;
+  border: 1px solid var(--crt-orange-1);
+  padding: 0.5rem;
+  text-align: center;
 }
 
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-}
-
-.cancel-btn,
-.submit-btn {
-  padding: 0.5rem 1.25rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  border: none;
-}
-
-.cancel-btn {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.cancel-btn:hover {
-  background-color: #ccc;
-}
-
-.submit-btn {
-  background-color: #28a745;
-  color: white;
-}
-
-.submit-btn:hover {
-  background-color: #218838;
 }
 </style>
