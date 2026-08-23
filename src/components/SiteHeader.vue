@@ -102,9 +102,9 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: var(--surface-color);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  background-color: var(--primary-color);
+  border-bottom: 4px solid var(--accent-color);
+  box-shadow: var(--shadow-md);
   position: relative;
   z-index: 1000;
 }
@@ -114,6 +114,7 @@ onMounted(() => {
   height: 45px;
   width: auto;
   transition: transform 0.2s ease;
+  filter: brightness(0) invert(1); /* Makes the SVG icon white */
 }
 
 .logo-icon:hover {
@@ -136,23 +137,23 @@ onMounted(() => {
 /* Text link styling */
 .nav-link {
   text-decoration: none;
-  color: var(--text-secondary);
+  color: #e2e8f0; /* Light gray/white */
   font-weight: 500;
   font-size: 0.95rem;
   transition: color 0.2s ease;
 }
 
 .nav-link:hover {
-  color: var(--accent-color);
+  color: var(--accent-hover);
 }
 
 .router-link-active {
   color: var(--accent-color);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .users-link {
-  color: var(--accent-color) !important;
+  color: #fbbf24 !important; /* Gold/yellow for special link in dark mode */
 }
 
 /* Authentication button */
@@ -160,7 +161,7 @@ onMounted(() => {
   text-decoration: none;
   background-color: var(--accent-color);
   color: white;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95rem;
   padding: 0.5rem 1.2rem;
   border-radius: var(--radius-md);
@@ -183,7 +184,7 @@ onMounted(() => {
   display: none;
   cursor: pointer;
   z-index: 1001;
-  color: var(--primary-color);
+  color: white;
 }
 
 /* Responsive Styles */
@@ -202,7 +203,7 @@ onMounted(() => {
     width: 250px;
     height: auto;
     max-height: calc(100vh - 78px);
-    background-color: var(--surface-color);
+    background-color: var(--primary-color);
     flex-direction: column;
     align-items: flex-start;
     padding: 2rem;
@@ -210,6 +211,8 @@ onMounted(() => {
     z-index: 999;
     overflow-y: auto;
     border-bottom-left-radius: var(--radius-md);
+    border-left: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
   }
 
   .nav-links.menu-open {
@@ -218,8 +221,8 @@ onMounted(() => {
 
   .nav-link {
     width: 100%;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--secondary-color);
   }
 
   .nav-link:last-child {
