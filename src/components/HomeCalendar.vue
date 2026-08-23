@@ -1,6 +1,11 @@
 <template>
   <div class="calendar-wrapper">
-    <v-calendar expanded title-position="left" :attributes="calendarAttributes" @dayclick="onDayClick" />
+    <v-calendar
+      expanded
+      title-position="left"
+      :attributes="calendarAttributes"
+      @dayclick="onDayClick"
+    />
 
     <div class="event-list">
       <h2 class="date-header">Activities for {{ formattedSelectedDate }}</h2>
@@ -15,7 +20,12 @@
           <span class="event-time">{{ formatTime(event['date']) }}</span>
         </div>
         <div class="event-tags" v-if="event.tags && event.tags.length">
-          <span v-for="tag in event.tags" :key="tag" class="tag-pill" :style="{ backgroundColor: getTagColor(tag) }">
+          <span
+            v-for="tag in event.tags"
+            :key="tag"
+            class="tag-pill"
+            :style="{ backgroundColor: getTagColor(tag) }"
+          >
             {{ tag === 'all' ? 'All' : tag }}
           </span>
         </div>
@@ -141,9 +151,7 @@ const getTagColor = (tag) => {
 <style scoped>
 /* Mobile-first, readable styles adhering to the Design Document */
 .calendar-wrapper {
-  max-width: 600px;
   margin: 0 auto;
-  padding: 1rem;
 }
 
 .event-list {
@@ -151,65 +159,81 @@ const getTagColor = (tag) => {
 }
 
 .date-header {
-  font-size: 1.25rem;
-  font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
 }
 
 .empty-state {
-  color: #666;
+  color: var(--text-secondary);
   font-style: italic;
   font-size: 1.1rem;
+  padding: 1rem 0;
 }
 
 .event-card {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .event-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+@media (min-width: 600px) {
+  .event-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .event-title {
   font-size: 1.3rem;
   margin: 0;
-  color: #2c3e50;
+  color: var(--primary-color);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .event-time {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #666;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
 }
 
 .event-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
 }
 
 .tag-pill {
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
   font-size: 0.85rem;
-  color: #333;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+  font-weight: 500;
 }
 
 .event-description {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.5;
   margin: 0;
-  color: #4a4a4a;
+  color: var(--text-secondary);
 }
 </style>

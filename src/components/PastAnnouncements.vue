@@ -54,19 +54,20 @@ const formatDate = (timestamp) => {
 
 <style scoped>
 .action-btn {
-  background-color: #f8f9fa;
-  color: #333;
-  border: 1px solid #ccc;
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .action-btn:hover {
-  background-color: #e2e6ea;
+  background-color: var(--background-color);
+  border-color: var(--text-secondary);
 }
 
 .lightbox-overlay {
@@ -75,24 +76,26 @@ const formatDate = (timestamp) => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(15, 23, 42, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
+  background: var(--surface-color);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
   width: 90%;
   max-width: 600px;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 .close-btn {
@@ -103,21 +106,22 @@ const formatDate = (timestamp) => {
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1;
+  transition: color 0.2s;
 }
 
 .close-btn:hover {
-  color: #000;
+  color: var(--text-primary);
 }
 
 .modal-content h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
-  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.75rem;
   flex-shrink: 0;
-  color: #2c3e50;
+  color: var(--primary-color);
   padding-right: 2rem; /* Make room for X */
 }
 
@@ -132,49 +136,52 @@ const formatDate = (timestamp) => {
   width: 8px;
 }
 .scrollable-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--background-color);
   border-radius: 4px;
 }
 .scrollable-content::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--border-color);
   border-radius: 4px;
 }
 .scrollable-content::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: var(--text-secondary);
 }
 
 .empty-state {
-  color: #666;
+  color: var(--text-secondary);
   font-style: italic;
   text-align: center;
   margin-top: 2rem;
 }
 
 .announcement-card {
-  border: 1px solid #eaeaea;
-  border-left: 4px solid #007bff;
-  border-radius: 6px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  background: #fafafa;
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--surface-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .announcement-card h3 {
   margin: 0 0 0.5rem 0;
-  color: #2c3e50;
-  font-size: 1.25rem;
+  color: var(--primary-color);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .date {
   display: block;
-  color: #7f8c8d;
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
 }
 
 .announcement-card p {
   margin: 0;
-  color: #4a4a4a;
+  color: var(--text-primary);
   line-height: 1.6;
   white-space: pre-wrap;
 }

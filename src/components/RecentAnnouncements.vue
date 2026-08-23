@@ -56,55 +56,54 @@ const formatDate = (timestamp) => {
 
 <style scoped>
 .recent-announcements-wrapper {
-  /* Using max-width matching the upcoming events or home content */
-  max-width: 600px;
   margin: 2.5rem auto 2.5rem auto;
-  padding: 1rem;
-  /* Optional visual grouping, though simple works best */
 }
 
 .section-header {
-  font-size: 1.25rem;
-  font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
   margin-bottom: 1.5rem;
-  color: #2c3e50;
+  color: var(--primary-color);
   margin-top: 0;
 }
 
 .empty-state {
-  color: #666;
+  color: var(--text-secondary);
   font-style: italic;
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
 
 .recent-card {
-  background: #f9f9f9;
-  border: 1px solid #eaeaea;
-  border-left: 4px solid #13294b;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary-color);
   padding: 1.5rem;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .title {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin: 0 0 0.5rem 0;
-  color: #2c3e50;
+  color: var(--primary-color);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .date {
   display: block;
-  color: #7f8c8d;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: 1rem;
 }
 
 .content {
   margin: 0;
-  color: #4a4a4a;
+  color: var(--text-primary);
   line-height: 1.6;
   white-space: pre-wrap;
 }
