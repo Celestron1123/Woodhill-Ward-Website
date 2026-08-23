@@ -2,7 +2,7 @@
   <main class="main-view-container">
     <header class="page-header">
       <h1>Wood Hill Ward Home</h1>
-      <p class="subtitle">Upcoming Activities & Announcements</p>
+      <p class="subtitle">Upcoming Activities and Announcements</p>
     </header>
 
     <section class="calendar-section">
