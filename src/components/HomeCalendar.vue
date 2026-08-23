@@ -1,11 +1,6 @@
 <template>
   <div class="calendar-wrapper">
-    <v-calendar
-      expanded
-      title-position="left"
-      :attributes="calendarAttributes"
-      @dayclick="onDayClick"
-    />
+    <v-calendar expanded title-position="left" :attributes="calendarAttributes" @dayclick="onDayClick" />
 
     <div class="event-list">
       <h2 class="date-header">Activities for {{ formattedSelectedDate }}</h2>
@@ -20,12 +15,7 @@
           <span class="event-time">{{ formatTime(event['date']) }}</span>
         </div>
         <div class="event-tags" v-if="event.tags && event.tags.length">
-          <span
-            v-for="tag in event.tags"
-            :key="tag"
-            class="tag-pill"
-            :style="{ backgroundColor: getTagColor(tag) }"
-          >
+          <span v-for="tag in event.tags" :key="tag" class="tag-pill" :style="{ backgroundColor: getTagColor(tag) }">
             {{ tag === 'all' ? 'All' : tag }}
           </span>
         </div>
@@ -86,7 +76,7 @@ const calendarAttributes = computed(() => {
     {
       key: 'selected',
       highlight: {
-        color: 'blue',
+        color: 'orange',
         fillMode: 'solid',
       },
       dates: selectedDate.value,

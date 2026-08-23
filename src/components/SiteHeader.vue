@@ -10,58 +10,27 @@
       <nav class="nav-links" :class="{ 'menu-open': isMenuOpen }">
         <router-link to="/young-women" class="nav-link" @click="closeMenu">Young Women</router-link>
         <router-link to="/young-men" class="nav-link" @click="closeMenu">Young Men</router-link>
-        <router-link to="/relief-society" class="nav-link" @click="closeMenu"
-          >Relief Society</router-link
-        >
-        <router-link to="/elders-quorum" class="nav-link" @click="closeMenu"
-          >Elders Quorum</router-link
-        >
+        <router-link to="/relief-society" class="nav-link" @click="closeMenu">Relief Society</router-link>
+        <router-link to="/elders-quorum" class="nav-link" @click="closeMenu">Elders Quorum</router-link>
         <router-link to="/primary" class="nav-link" @click="closeMenu">Primary</router-link>
-        <router-link to="/sunday-school" class="nav-link" @click="closeMenu"
-          >Sunday School</router-link
-        >
-        <router-link to="/feed" class="nav-link" @click="closeMenu">Social</router-link>
-        <router-link
-          v-if="canManageUsers"
-          to="/users"
-          class="nav-link users-link"
-          @click="closeMenu"
-          >Users</router-link
-        >
+        <router-link to="/sunday-school" class="nav-link" @click="closeMenu">Sunday School</router-link>
+        <router-link to="/feed" class="nav-link" @click="closeMenu">Scrapbook</router-link>
+        <router-link v-if="canManageUsers" to="/users" class="nav-link users-link"
+          @click="closeMenu">Users</router-link>
       </nav>
 
       <router-link v-if="isLoggedIn" to="/account" class="auth-button"> My Account </router-link>
       <router-link v-else to="/login" class="auth-button"> Login </router-link>
 
       <div class="hamburger" @click="toggleMenu">
-        <svg
-          v-if="!isMenuOpen"
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
+        <svg v-if="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
-        <svg
-          v-else
-          xmlns="http://www.w3.org/2000/svg"
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
+        <svg v-else xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -114,7 +83,8 @@ onMounted(() => {
   height: 45px;
   width: auto;
   transition: transform 0.2s ease;
-  filter: brightness(0) invert(1); /* Makes the SVG icon white */
+  filter: brightness(0) invert(1);
+  /* Makes the SVG icon white */
 }
 
 .logo-icon:hover {
@@ -137,7 +107,8 @@ onMounted(() => {
 /* Text link styling */
 .nav-link {
   text-decoration: none;
-  color: #e2e8f0; /* Light gray/white */
+  color: #e2e8f0;
+  /* Light gray/white */
   font-weight: 500;
   font-size: 0.95rem;
   transition: color 0.2s ease;
@@ -153,7 +124,8 @@ onMounted(() => {
 }
 
 .users-link {
-  color: #fbbf24 !important; /* Gold/yellow for special link in dark mode */
+  color: white !important;
+  /* Gold/yellow for special link in dark mode */
 }
 
 /* Authentication button */

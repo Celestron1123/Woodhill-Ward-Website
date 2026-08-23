@@ -83,7 +83,7 @@ const formatDate = (timestamp) => {
 .recent-card {
   background: #f9f9f9;
   border: 1px solid #eaeaea;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid #13294b;
   padding: 1.5rem;
   border-radius: 6px;
   margin-bottom: 1.5rem;

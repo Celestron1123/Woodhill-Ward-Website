@@ -151,7 +151,7 @@ const formatDate = (timestamp) => {
 }
 
 .hashtag {
-  color: #1da1f2;
+  color: #d35400;
   font-weight: bold;
 }
 
@@ -162,7 +162,7 @@ const formatDate = (timestamp) => {
 
 .btn-primary {
   display: inline-block;
-  background-color: #007bff;
+  background-color: #d35400;
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
@@ -172,6 +172,6 @@ const formatDate = (timestamp) => {
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #e67e22;
 }
 </style>

@@ -22,12 +22,8 @@
           <td class="col-details">
             <strong class="event-title">{{ event.title }}</strong>
             <div class="event-tags" v-if="event.tags && event.tags.length">
-              <span
-                v-for="tag in event.tags"
-                :key="tag"
-                class="tag-pill"
-                :style="{ backgroundColor: getTagColor(tag) }"
-              >
+              <span v-for="tag in event.tags" :key="tag" class="tag-pill"
+                :style="{ backgroundColor: getTagColor(tag) }">
                 {{ tag === 'all' ? 'All' : tag }}
               </span>
             </div>
@@ -98,7 +94,7 @@ const formatTime = (timestamp) => {
 }
 
 const PASTEL_COLORS = {
-  'Young Women': '#ffb3ba',
+  'Young Women': '#ffa6da',
   'Young Men': '#bae1ff',
   'Relief Society': '#d5baff',
   'Elders Quorum': '#baffc9',
