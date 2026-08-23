@@ -120,18 +120,25 @@ const submitEvent = async () => {
 }
 
 .create-event-btn {
-  background-color: #007bff;
+  background-color: var(--accent-color);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1.1rem;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+  font-weight: 500;
 }
 
 .create-event-btn:hover {
-  background-color: #0056b3;
+  background-color: var(--accent-hover);
+}
+
+.create-event-btn:active {
+  transform: translateY(1px);
 }
 
 .lightbox-overlay {
@@ -140,32 +147,36 @@ const submitEvent = async () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(15, 23, 42, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .event-modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  min-width: 300px;
+  background: var(--surface-color);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  min-width: 320px;
   max-width: 90%;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 .event-modal-content h2 {
   margin-top: 0;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #eaeaea;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.75rem;
+  color: var(--primary-color);
 }
 
 .event-form-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .event-form-table td {
@@ -176,43 +187,57 @@ const submitEvent = async () => {
 .tags-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: 0.75rem 1rem;
   padding-top: 0.5rem;
 }
 
 .tag-checkbox {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
   font-weight: normal !important;
   margin-top: 0 !important;
   font-size: 0.95rem;
+  cursor: pointer;
 }
 
 .event-form-table label {
-  font-weight: bold;
+  font-weight: 600;
   display: inline-block;
   margin-top: 0.5rem;
+  color: var(--text-primary);
+  padding-right: 1rem;
 }
 
-.event-form-table input,
+.event-form-table input[type='text'],
+.event-form-table input[type='date'],
+.event-form-table input[type='time'],
 .event-form-table textarea {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   font-size: 1rem;
   box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.event-form-table input:focus,
+.event-form-table textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .event-form-table textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 .error-text {
-  color: #dc3545;
-  font-weight: bold;
+  color: #ef4444;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 0.9rem;
@@ -226,28 +251,31 @@ const submitEvent = async () => {
 
 .cancel-btn,
 .submit-btn {
-  padding: 0.5rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   border: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
 .cancel-btn {
-  background-color: #e0e0e0;
-  color: #333;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
 .cancel-btn:hover {
-  background-color: #ccc;
+  background-color: var(--border-color);
 }
 
 .submit-btn {
-  background-color: #28a745;
+  background-color: var(--accent-color);
   color: white;
 }
 
 .submit-btn:hover {
-  background-color: #218838;
+  background-color: var(--accent-hover);
 }
 </style>

@@ -6,38 +6,30 @@
       <p>No upcoming events</p>
     </div>
 
-    <table v-else class="events-table">
-      <thead>
-        <tr>
-          <th class="col-date">Date</th>
-          <th class="col-details">Activity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="event in upcomingEvents" :key="event.id">
-          <td class="col-date">
-            <div class="event-date-text">{{ formatDate(event['date']) }}</div>
-            <div class="event-time-text">{{ formatTime(event['date']) }}</div>
-          </td>
-          <td class="col-details">
-            <strong class="event-title">{{ event.title }}</strong>
-            <div class="event-tags" v-if="event.tags && event.tags.length">
-              <span
-                v-for="tag in event.tags"
-                :key="tag"
-                class="tag-pill"
-                :style="{ backgroundColor: getTagColor(tag) }"
-              >
-                {{ tag === 'all' ? 'All' : tag }}
-              </span>
-            </div>
-            <div v-if="event.description" class="event-description">
-              {{ event.description }}
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-else class="event-list">
+      <div v-for="event in upcomingEvents" :key="event.id" class="event-item">
+        <div class="col-date">
+          <div class="event-date-text">{{ formatDate(event['date']) }}</div>
+          <div class="event-time-text">{{ formatTime(event['date']) }}</div>
+        </div>
+        <div class="col-details">
+          <strong class="event-title">{{ event.title }}</strong>
+          <div class="event-tags" v-if="event.tags && event.tags.length">
+            <span
+              v-for="tag in event.tags"
+              :key="tag"
+              class="tag-pill"
+              :style="{ backgroundColor: getTagColor(tag) }"
+            >
+              {{ tag === 'all' ? 'All' : tag }}
+            </span>
+          </div>
+          <div v-if="event.description" class="event-description">
+            {{ event.description }}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -49,8 +41,8 @@ import { collection, query, where, orderBy } from 'firebase/firestore'
 const props = defineProps({
   filterTag: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 
 const db = useFirestore()
@@ -65,17 +57,17 @@ today.setHours(0, 0, 0, 0)
 const eventsQuery = query(
   collection(db, 'events'),
   where('date', '>=', today),
-  orderBy('date', 'asc')
+  orderBy('date', 'asc'),
 )
 
 const allUpcomingEvents = useCollection(eventsQuery)
 
 const upcomingEvents = computed(() => {
-  let filtered = allUpcomingEvents.value;
+  let filtered = allUpcomingEvents.value
   if (props.filterTag) {
-    filtered = filtered.filter(event => event.tags && event.tags.includes(props.filterTag));
+    filtered = filtered.filter((event) => event.tags && event.tags.includes(props.filterTag))
   }
-  return filtered.slice(0, 3);
+  return filtered.slice(0, 3)
 })
 
 const formatDate = (timestamp) => {
@@ -98,7 +90,7 @@ const formatTime = (timestamp) => {
 }
 
 const PASTEL_COLORS = {
-  'Young Women': '#ffb3ba',
+  'Young Women': '#ffa6da',
   'Young Men': '#bae1ff',
   'Relief Society': '#d5baff',
   'Elders Quorum': '#baffc9',
@@ -113,92 +105,105 @@ const getTagColor = (tag) => {
 </script>
 
 <style scoped>
-/* Mobile-first, plain, and readable styling adhering to the Design Document */
 .upcoming-events-wrapper {
-  max-width: 600px;
   margin: 2rem auto 0 auto;
-  padding: 1rem;
 }
 
 .events-header {
-  font-size: 1.25rem;
-  font-weight: bold;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
 }
 
 .empty-state {
-  color: #666;
+  color: var(--text-secondary);
   font-style: italic;
   font-size: 1.1rem;
-}
-
-.events-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.events-table th,
-.events-table td {
-  text-align: left;
   padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
 }
 
-.events-table th {
-  font-size: 1.1rem;
-  color: #4a4a4a;
-  font-weight: bold;
+.event-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
+}
+
+.event-item:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 600px) {
+  .event-item {
+    flex-direction: row;
+    gap: 2rem;
+  }
 }
 
 .col-date {
-  width: 30%;
-  vertical-align: top;
-  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+@media (min-width: 600px) {
+  .col-date {
+    width: 25%;
+    flex-shrink: 0;
+  }
 }
 
 .event-date-text {
-  font-weight: bold;
-  color: #2c3e50;
-  margin-bottom: 0.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 1.1rem;
 }
 
 .event-time-text {
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
 }
 
 .col-details {
-  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .event-title {
-  font-size: 1.2rem;
-  display: block;
-  color: #2c3e50;
-  margin-bottom: 0.25rem;
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .event-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
 }
 
 .tag-pill {
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  color: #333;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  color: #1e293b;
+  font-weight: 500;
 }
 
 .event-description {
-  font-size: 1rem;
-  color: #4a4a4a;
-  line-height: 1.4;
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 0.25rem;
 }
 </style>

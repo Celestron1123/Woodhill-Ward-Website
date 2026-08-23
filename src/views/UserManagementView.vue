@@ -1,14 +1,14 @@
 <template>
-  <div class="user-management-container">
-    <h2>User Management</h2>
+  <div class="page-container user-management-container">
+    <h2 class="header-title">User Management</h2>
 
-    <div v-if="isLoading">
+    <div v-if="isLoading" class="empty-state">
       <p>Loading users...</p>
     </div>
-    <div v-else-if="users.length === 0">
+    <div v-else-if="users.length === 0" class="empty-state">
       <p>No users to manage.</p>
     </div>
-    <div v-else>
+    <div v-else class="table-container">
       <table class="users-table">
         <thead>
           <tr>
@@ -20,7 +20,9 @@
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.id">
-            <td>{{ user.username }}</td>
+            <td>
+              <strong>{{ user.username }}</strong>
+            </td>
             <td>{{ user.email }}</td>
             <td>
               <span :class="['role-badge', user.role]" :title="getTooltip(user.role)">
@@ -32,6 +34,7 @@
                 v-model="user.selectedRole"
                 @change="updateRole(user, user.selectedRole)"
                 :disabled="!canModify(user)"
+                class="role-select"
               >
                 <option v-for="role in getAvailableRoles(user)" :key="role" :value="role">
                   {{ role }}
@@ -166,66 +169,113 @@ const updateRole = async (user, newRole) => {
 
 <style scoped>
 .user-management-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
-  font-family: sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
+  color: var(--text-secondary);
+}
+
+.table-container {
+  overflow-x: auto;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
 }
 
 .users-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
 }
 
 .users-table th,
 .users-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem;
   text-align: left;
 }
 
 .users-table th {
-  background-color: #f2f2f2;
+  background-color: var(--background-color);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.users-table tr:last-child td {
+  border-bottom: none;
 }
 
 .role-badge {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: bold;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 600;
   text-transform: capitalize;
+  font-size: 0.85rem;
   cursor: help;
+  display: inline-block;
 }
 
 /* Pastel rainbow colors (cool for low, hot for high) */
 .role-badge.viewer {
-  background-color: #b3cde0; /* Light blue */
-  color: #011f4b;
+  background-color: #e0f2fe;
+  color: #0369a1;
 }
 
 .role-badge.verified {
-  background-color: #c5e1a5; /* Light green */
-  color: #33691e;
+  background-color: #dcfce7;
+  color: #15803d;
 }
 
 .role-badge.mod {
-  background-color: #fff59d; /* Light yellow */
-  color: #f57f17;
+  background-color: #fef9c3;
+  color: #a16207;
 }
 
 .role-badge.admin {
-  background-color: #ffcc80; /* Light orange */
-  color: #e65100;
+  background-color: #ffedd5;
+  color: #c2410c;
 }
 
 .role-badge.dev {
-  background-color: #ef9a9a; /* Light red */
-  color: #b71c1c;
+  background-color: #fee2e2;
+  color: #b91c1c;
 }
 
-select {
-  padding: 6px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.role-select {
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.role-select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.role-select:disabled {
+  background-color: var(--background-color);
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 </style>

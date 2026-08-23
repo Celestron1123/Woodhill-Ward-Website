@@ -14,8 +14,16 @@
       <div class="newsletter-card">
         <div class="newsletter-icon">
           <!-- Document Icon -->
-          <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            width="48"
+            height="48"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -26,7 +34,9 @@
         <div class="newsletter-content">
           <h3>Monthly Newsletter</h3>
           <p>Read our latest updates, spiritual thoughts, and announcements.</p>
-          <a href="/src/assets/August 2026 Newsletter.pdf" target="_blank" class="btn-outline">View Newsletter (PDF)</a>
+          <a href="/src/assets/August 2026 Newsletter.pdf" target="_blank" class="btn-outline"
+            >View Newsletter (PDF)</a
+          >
         </div>
       </div>
     </section>
@@ -72,134 +82,156 @@ import GroupSocial from '@/components/GroupSocial.vue'
 <style scoped>
 /* Mobile-first styling conforming to the Design Document */
 .main-view-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
-  font-family: sans-serif;
-  color: #2c3e50;
+  padding: 2rem 1rem;
 }
 
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .page-header h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 0 0 0.5rem 0;
+  color: var(--primary-color);
 }
 
 .subtitle {
-  color: #656565;
-  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
   margin: 0;
   font-style: italic;
 }
 
 .calendar-section {
-  background: #ffffff;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  border: 1px solid var(--border-color);
 }
 
 /* Newsletter section */
 .newsletter-section {
-  max-width: 600px;
-  margin: 0 auto 2.5rem auto;
-  padding: 1rem;
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
 }
 
 .newsletter-card {
-  background: #fdfbf7;
-  border: 1px solid #e0dcd3;
-  border-radius: 8px;
-  padding: 1.5rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.newsletter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-color);
 }
 
 .newsletter-icon {
-  color: #d35400;
+  color: var(--accent-color);
   flex-shrink: 0;
 }
 
 .newsletter-content h3 {
   margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
-  color: #2c3e50;
+  font-size: 1.4rem;
+  color: var(--primary-color);
 }
 
 .newsletter-content p {
-  margin: 0 0 1rem 0;
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.4;
+  margin: 0 0 1.25rem 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .btn-outline {
   display: inline-block;
-  padding: 0.5rem 1rem;
-  border: 1px solid #d35400;
-  color: #d35400;
-  border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  border-radius: var(--radius-md);
   text-decoration: none;
-  font-weight: bold;
-  font-size: 0.9rem;
-  transition: all 0.2s;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
 .btn-outline:hover {
-  background-color: #d35400;
+  background-color: var(--accent-color);
   color: white;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .newsletter-card {
     flex-direction: column;
     text-align: center;
-    gap: 1rem;
+    gap: 1.5rem;
   }
+}
+
+/* Social section */
+.social-section {
+  margin-bottom: 3rem;
 }
 
 /* Contacts section */
 .info-section {
-  max-width: 600px;
-  margin: 0 auto 2.5rem auto;
-  padding: 1rem;
+  margin-bottom: 3rem;
 }
 
 .info-section h2 {
-  font-size: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.8rem;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
 }
 
 .contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .contact-list {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
 
 .contact-item {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #eaeaea;
+  background: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .contact-item strong {
   display: block;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
-  color: #2c3e50;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
 }
 
 .contact-item p {
   margin: 0.25rem 0;
-  color: #555;
+  color: var(--text-secondary);
 }
 </style>
