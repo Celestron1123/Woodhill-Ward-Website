@@ -32,14 +32,28 @@
     <section class="info-section">
       <h2>Building Info</h2>
       <div class="card-grid">
-        <div class="info-card interactive-card" @click="openLightbox('/src/assets/ward-boundaries.png')">
+        <div
+          class="info-card interactive-card"
+          @click="openLightbox('/src/assets/ward-boundaries.png')"
+        >
           <h3>Ward Boundaries</h3>
-          <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail" />
+          <img
+            src="/src/assets/ward-boundaries.png"
+            alt="Map of Wood Hill Ward boundaries"
+            class="thumbnail"
+          />
           <p class="click-hint">Tap to expand map</p>
         </div>
-        <div class="info-card interactive-card" @click="openLightbox('/src/assets/building-map.png')">
+        <div
+          class="info-card interactive-card"
+          @click="openLightbox('/src/assets/building-map.png')"
+        >
           <h3>Building Layout</h3>
-          <img src="/src/assets/building-map.png" alt="Layout map of the ward building" class="thumbnail" />
+          <img
+            src="/src/assets/building-map.png"
+            alt="Layout map of the ward building"
+            class="thumbnail"
+          />
           <p class="click-hint">Tap to expand map</p>
         </div>
       </div>
@@ -97,74 +111,82 @@ const closeLightbox = () => {
 <style scoped>
 /* Mobile-first styling conforming to the Design Document */
 .main-view-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
-  font-family: sans-serif;
-  color: #2c3e50;
+  padding: 2rem 1rem;
 }
 
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .page-header h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 0 0 0.5rem 0;
+  color: var(--primary-color);
 }
 
 .subtitle {
-  color: #656565;
-  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
   margin: 0;
 }
 
 .calendar-section {
-  /* Adds a subtle container around the calendar area if desired */
-  background: #ffffff;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  border: 1px solid var(--border-color);
 }
 
+.announcements-section,
 .info-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .info-section h2 {
-  font-size: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
+  font-size: 1.8rem;
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
 }
 
 /* Grid for Cards - Mobile First (1 column), then 2 columns on larger screens */
 .card-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   .card-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 .info-card {
-  background: #f9f9f9;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  padding: 1rem;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
   text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .info-card h3 {
   margin-top: 0;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  color: var(--primary-color);
 }
 
 /* Link Cards */
@@ -172,68 +194,78 @@ const closeLightbox = () => {
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: background-color 0.2s ease;
 }
 
 .link-card:hover {
-  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-color);
 }
 
 .link-card p {
-  color: #666;
-  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
   margin: 0;
 }
 
 /* Map Cards */
 .interactive-card {
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
 .interactive-card:hover {
-  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-color);
 }
 
 .thumbnail {
   width: 100%;
-  max-height: 150px;
+  max-height: 200px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
-  border: 1px solid #ddd;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
 }
 
 .click-hint {
-  font-size: 0.85rem;
-  color: #007bff;
+  font-size: 0.9rem;
+  color: var(--accent-color);
   margin: 0;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 /* Contact List */
 .contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .contact-list {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
 
 .contact-item {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #eaeaea;
+  background: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .contact-item strong {
   display: block;
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
 }
 
 .contact-item p {
   margin: 0.25rem 0;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 /* Lightbox Overlay Styles */
@@ -243,34 +275,40 @@ const closeLightbox = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(15, 23, 42, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  /* Ensure it floats above everything */
+  backdrop-filter: blur(4px);
 }
 
 .expanded-img {
   max-width: 90%;
   max-height: 90%;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
 }
 
 .close-btn {
   position: absolute;
   top: 20px;
   right: 30px;
-  background: none;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
-  font-size: 3rem;
+  font-size: 2rem;
   cursor: pointer;
-  line-height: 1;
+  transition: background-color 0.2s;
 }
 
 .close-btn:hover {
-  color: #ddd;
+  background: rgba(255, 255, 255, 0.2);
 }
 </style>

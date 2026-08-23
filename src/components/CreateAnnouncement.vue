@@ -82,19 +82,25 @@ const submit = async () => {
 
 <style scoped>
 .action-btn {
-  background-color: #007bff;
+  background-color: var(--accent-color);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 .action-btn:hover {
-  background-color: #0056b3;
+  background-color: var(--accent-hover);
+}
+
+.action-btn:active {
+  transform: translateY(1px);
 }
 
 .lightbox-overlay {
@@ -103,22 +109,24 @@ const submit = async () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(15, 23, 42, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  min-width: 300px;
+  background: var(--surface-color);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  min-width: 320px;
   max-width: 90%;
   width: 500px;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 .close-btn {
@@ -129,20 +137,21 @@ const submit = async () => {
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1;
+  transition: color 0.2s;
 }
 
 .close-btn:hover {
-  color: #000;
+  color: var(--text-primary);
 }
 
 .modal-content h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #eaeaea;
-  padding-bottom: 0.5rem;
-  color: #2c3e50;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.75rem;
+  color: var(--primary-color);
   padding-right: 2rem; /* Make room for X */
 }
 
@@ -158,28 +167,30 @@ const submit = async () => {
 }
 
 .form-table label {
-  font-weight: bold;
+  font-weight: 600;
   display: inline-block;
   margin-top: 0.5rem;
-  color: #4a4a4a;
+  color: var(--text-primary);
+  padding-right: 1rem;
 }
 
 .form-table input,
 .form-table textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   font-size: 1rem;
   box-sizing: border-box;
   font-family: inherit;
+  transition: border-color 0.2s;
 }
 
 .form-table input:focus,
 .form-table textarea:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .form-table textarea {
@@ -188,14 +199,14 @@ const submit = async () => {
 }
 
 .error-text {
-  color: #dc3545;
-  font-weight: bold;
+  color: #ef4444;
+  font-weight: 600;
   margin-top: 0;
   margin-bottom: 1.5rem;
   font-size: 0.95rem;
-  background: #f8d7da;
+  background: #fee2e2;
   padding: 0.5rem;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   text-align: center;
 }
 
@@ -207,30 +218,31 @@ const submit = async () => {
 
 .cancel-btn,
 .submit-btn {
-  padding: 0.6rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: bold;
-  border-radius: 4px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
   cursor: pointer;
   border: none;
   transition: background-color 0.2s ease;
 }
 
 .cancel-btn {
-  background-color: #e0e0e0;
-  color: #333;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
 .cancel-btn:hover {
-  background-color: #ccc;
+  background-color: var(--border-color);
 }
 
 .submit-btn {
-  background-color: #28a745;
+  background-color: var(--accent-color);
   color: white;
 }
 
 .submit-btn:hover {
-  background-color: #218838;
+  background-color: var(--accent-hover);
 }
 </style>

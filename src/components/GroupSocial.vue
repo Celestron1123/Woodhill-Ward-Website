@@ -1,7 +1,7 @@
 <template>
   <div class="group-social-wrapper">
     <h2 class="section-header">Recent Social Posts</h2>
-    
+
     <div v-if="posts.length === 0" class="empty-state">
       <p>No recent posts found.</p>
     </div>
@@ -37,8 +37,8 @@ import ImageCarousel from './ImageCarousel.vue'
 const props = defineProps({
   tags: {
     type: Array,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const posts = ref([])

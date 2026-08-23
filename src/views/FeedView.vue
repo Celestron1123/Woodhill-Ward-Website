@@ -1,89 +1,67 @@
 <template>
-  <div>
-    <h2>Ward Feed</h2>
-    <p>Welcome to the ward website!</p>
+  <div class="page-container feed-container">
+    <header class="feed-header">
+      <h2>Ward Feed</h2>
+      <p class="subtitle">Welcome to the ward website! Share what's happening.</p>
+    </header>
 
-    <hr />
-
-    <div v-if="canCreatePost">
+    <div v-if="canCreatePost" class="card create-post-card">
       <h3>Create a Post</h3>
-      <form @submit.prevent="submitPost">
+      <form @submit.prevent="submitPost" class="post-form">
         <textarea
           v-model="newPostContent"
           placeholder="What's going on in the ward?"
           rows="4"
-          cols="50"
           required
+          class="post-textarea"
         ></textarea>
-        <br />
-        <button type="button" @click="openCloudinaryWidget" style="margin-right: 10px">
-          📷 Add Photos
-        </button>
-        <button type="submit">Post</button>
 
-        <div
-          v-if="imageUrls.length > 0"
-          style="margin-top: 15px; display: flex; gap: 10px; overflow-x: auto"
-        >
-          <div v-for="(url, index) in imageUrls" :key="index" style="position: relative">
-            <img
-              :src="url"
-              alt="Preview"
-              style="height: 80px; width: 80px; object-fit: cover; border-radius: 8px"
-            />
-            <button
-              type="button"
-              @click="removeImage(index)"
-              style="
-                position: absolute;
-                top: -5px;
-                right: -5px;
-                background: red;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                cursor: pointer;
-              "
-            >
-              X
+        <div class="post-actions">
+          <button type="button" @click="openCloudinaryWidget" class="btn-secondary">
+            📷 Add Photos
+          </button>
+          <button type="submit" class="btn-primary">Post</button>
+        </div>
+
+        <div v-if="imageUrls.length > 0" class="image-preview-container">
+          <div v-for="(url, index) in imageUrls" :key="index" class="image-preview">
+            <img :src="url" alt="Preview" class="preview-img" />
+            <button type="button" @click="removeImage(index)" class="remove-img-btn">
+              &times;
             </button>
           </div>
         </div>
       </form>
     </div>
 
-    <hr />
-
-    <div style="margin-bottom: 20px;">
-      <h3>Search Posts by Hashtag</h3>
-      <input 
-        v-model="searchQuery" 
-        @keyup.enter="handleSearch" 
-        placeholder="Search tags (e.g. #ReliefSociety)" 
-        style="padding: 5px; margin-right: 10px;"
-      />
-      <button @click="handleSearch" style="margin-right: 5px;">Search</button>
-      <button v-if="isSearching" @click="clearSearch">Clear</button>
+    <div class="search-section">
+      <div class="search-bar">
+        <input
+          v-model="searchQuery"
+          @keyup.enter="handleSearch"
+          placeholder="Search tags (e.g. #ReliefSociety)"
+          class="search-input"
+        />
+        <button @click="handleSearch" class="btn-primary">Search</button>
+        <button v-if="isSearching" @click="clearSearch" class="btn-secondary">Clear</button>
+      </div>
     </div>
 
-    <div>
+    <div class="posts-feed">
       <h3>Recent Posts</h3>
-      <div v-if="posts.length === 0">No posts yet. Be the first to share!</div>
+      <div v-if="posts.length === 0" class="empty-state">No posts yet. Be the first to share!</div>
 
-      <div
-        v-for="post in posts"
-        :key="post.id"
-        style="border: 1px solid black; margin-bottom: 10px; padding: 10px"
-      >
-        <p>
+      <div v-for="post in posts" :key="post.id" class="card post-card">
+        <div class="post-header">
           <strong>{{ post.authorName }}</strong>
-          <small> - {{ formatDate(post.created) }}</small>
-        </p>
-        <p style="white-space: pre-wrap; margin: 10px 0;">
+          <small class="post-date">{{ formatDate(post.created) }}</small>
+        </div>
+
+        <p class="post-content">
           <template v-for="(token, index) in parseTextContent(post.textContent)" :key="index">
-            <span 
-              v-if="token.type === 'hashtag'" 
-              class="hashtag" 
+            <span
+              v-if="token.type === 'hashtag'"
+              class="hashtag"
               @click="triggerSearch(token.content)"
             >
               {{ token.content }}
@@ -92,27 +70,22 @@
           </template>
         </p>
 
-        <ImageCarousel :images="post.imageUrls" />
+        <div v-if="post.imageUrls && post.imageUrls.length > 0" class="post-images">
+          <ImageCarousel :images="post.imageUrls" />
+        </div>
 
-        <div
-          v-if="post.latestComment"
-          style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed gray"
-        >
-          <p style="margin: 0">
-            <small
-              ><strong>{{ post.latestComment.authorName }}</strong
-              >: {{ post.latestComment.content }}</small
-            >
+        <div v-if="post.latestComment" class="latest-comment">
+          <p>
+            <strong>{{ post.latestComment.authorName }}</strong
+            >: {{ post.latestComment.content }}
           </p>
         </div>
 
-        <button @click="goToPost(post.id)" style="margin-top: 10px">Comment</button>
+        <div class="post-footer">
+          <button @click="goToPost(post.id)" class="btn-secondary">Comment / View Full Post</button>
+        </div>
       </div>
     </div>
-
-    <hr />
-
-    <button @click="handleSignOut">Log Out</button>
   </div>
 </template>
 
@@ -149,17 +122,21 @@ let cloudinaryWidget // Store the widget instance
 const fetchPosts = async () => {
   try {
     const postsRef = collection(db, 'posts')
-    let q;
-    
+    let q
+
     if (isSearching.value && searchQuery.value.trim()) {
       // Clean query: remove '#', remove spaces, make lowercase
-      const cleanedQuery = searchQuery.value.trim().toLowerCase().replace(/#/g, '').replace(/\s+/g, '')
+      const cleanedQuery = searchQuery.value
+        .trim()
+        .toLowerCase()
+        .replace(/#/g, '')
+        .replace(/\s+/g, '')
       // Removed orderBy to avoid requiring a Firebase Composite Index for tags + created
       q = query(postsRef, where('tags', 'array-contains', cleanedQuery))
     } else {
       q = query(postsRef, orderBy('created', 'desc'))
     }
-    
+
     const querySnapshot = await getDocs(q)
     let fetchedPosts = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -340,15 +317,212 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.feed-container {
+  max-width: 800px;
+}
+
+.feed-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.feed-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.create-post-card {
+  margin-bottom: 2rem;
+}
+
+.create-post-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.post-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.post-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--background-color);
+  border-color: var(--text-secondary);
+}
+
+.image-preview-container {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.image-preview {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.preview-img {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.remove-img-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.remove-img-btn:hover {
+  background-color: #dc2626;
+}
+
+.search-section {
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.posts-feed h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.post-card {
+  margin-bottom: 1.5rem;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.post-date {
+  color: var(--text-secondary);
+}
+
+.post-content {
+  white-space: pre-wrap;
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+
 .hashtag {
-  color: #1da1f2; /* Nice bright blue */
-  font-weight: bold;
+  color: var(--accent-color);
+  font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .hashtag:hover {
   text-decoration: underline;
-  color: #0c85d0;
+  color: var(--accent-hover);
+}
+
+.post-images {
+  margin-bottom: 1rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.latest-comment {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+  background-color: var(--background-color);
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+}
+
+.latest-comment p {
+  margin: 0;
+}
+
+.post-footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 3rem;
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
 }
 </style>

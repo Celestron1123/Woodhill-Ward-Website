@@ -12,16 +12,8 @@ import SiteHeader from './components/SiteHeader.vue'
 </script>
 
 <style>
-/* Optional: We use global styles (no 'scoped' tag) here 
-  to reset margins so the header touches the edges of the screen 
-*/
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
 .page-content {
-  /* Adds breathing room around the active page */
-  padding: 2rem;
+  /* Let page-content take up remaining space if needed */
+  min-height: calc(100vh - 70px);
 }
 </style>

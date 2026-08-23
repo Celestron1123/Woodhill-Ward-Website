@@ -49,8 +49,8 @@ import { collection, query, where, orderBy } from 'firebase/firestore'
 const props = defineProps({
   filterTag: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 
 const db = useFirestore()
@@ -65,17 +65,17 @@ today.setHours(0, 0, 0, 0)
 const eventsQuery = query(
   collection(db, 'events'),
   where('date', '>=', today),
-  orderBy('date', 'asc')
+  orderBy('date', 'asc'),
 )
 
 const allUpcomingEvents = useCollection(eventsQuery)
 
 const upcomingEvents = computed(() => {
-  let filtered = allUpcomingEvents.value;
+  let filtered = allUpcomingEvents.value
   if (props.filterTag) {
-    filtered = filtered.filter(event => event.tags && event.tags.includes(props.filterTag));
+    filtered = filtered.filter((event) => event.tags && event.tags.includes(props.filterTag))
   }
-  return filtered.slice(0, 3);
+  return filtered.slice(0, 3)
 })
 
 const formatDate = (timestamp) => {

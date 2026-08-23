@@ -55,7 +55,7 @@ onMounted(() => {
           userData.value = userDoc.data()
         }
       } catch (error) {
-        console.error("Error fetching user data:", error)
+        console.error('Error fetching user data:', error)
       }
     } else {
       isLoggedIn.value = false
@@ -72,7 +72,7 @@ const handleLogout = async () => {
     await signOut(auth)
     router.push('/home')
   } catch (error) {
-    console.error("Error logging out:", error)
+    console.error('Error logging out:', error)
   }
 }
 </script>
@@ -81,69 +81,88 @@ const handleLogout = async () => {
 .account-center {
   max-width: 600px;
   margin: 2rem auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 2.5rem;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
 }
 
 h2 {
-  margin-bottom: 1.5rem;
-  color: #333;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  font-size: 2rem;
+  text-align: center;
 }
 
 .cta-container {
   text-align: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
+}
+
+.cta-container p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
 }
 
 .cta-button {
-  margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
-  background-color: #007bff;
+  padding: 0.75rem 2rem;
+  background-color: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
 .cta-button:hover {
-  background-color: #0056b3;
+  background-color: var(--accent-hover);
 }
 
 .account-details {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .info-group {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-group:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .info-group label {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 .info-group p {
   margin: 0;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .role-badge {
   display: inline-block;
-  padding: 0.25rem 0.5rem;
-  background-color: #e9ecef;
-  border-radius: 4px;
-  font-size: 0.9rem !important;
-  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--accent-color);
+  color: white !important;
+  border-radius: 9999px;
+  font-size: 0.85rem !important;
+  font-weight: 600;
   text-transform: capitalize;
   align-self: flex-start;
 }
@@ -151,17 +170,18 @@ h2 {
 .logout-button {
   margin-top: 2rem;
   padding: 0.75rem;
-  background-color: #dc3545;
+  background-color: #ef4444;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
   transition: background-color 0.2s;
+  width: 100%;
 }
 
 .logout-button:hover {
-  background-color: #c82333;
+  background-color: #dc2626;
 }
 </style>
