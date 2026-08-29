@@ -35,7 +35,7 @@ export function useUserRole() {
     })
   }
 
-  const canCreatePost = computed(() => ['verified', 'mod', 'admin', 'dev'].includes(userRole.value))
+  const canCreatePost = computed(() => ['mod', 'admin', 'dev'].includes(userRole.value))
   const canCreateEvent = computed(() => ['mod', 'admin', 'dev'].includes(userRole.value))
   const canCreateAnnouncement = computed(() => ['mod', 'admin', 'dev'].includes(userRole.value))
   const canManageUsers = computed(() => ['mod', 'admin', 'dev'].includes(userRole.value))
