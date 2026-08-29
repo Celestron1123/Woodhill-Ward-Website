@@ -51,8 +51,12 @@ service cloud.firestore {
         (getUserRole() == 'mod' && resource.data.role in ['viewer', 'verified'] && request.resource.data.role in ['viewer', 'verified'])
       );
       
-      // No delete rule explicitly asked for Users, but safe to allow devs or no one.
-      allow delete: if getUserRole() == 'dev';
+      // Delete rules
+      allow delete: if request.auth != null && (
+        request.auth.uid == userId ||
+        getUserRole() == 'dev' ||
+        (getUserRole() == 'admin' && resource.data.role != 'dev')
+      );
     }
   }
 }

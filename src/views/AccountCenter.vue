@@ -29,6 +29,7 @@
       </div>
 
       <button @click="handleLogout" class="logout-button">Log Out</button>
+      <button @click="handleDeleteAccount" class="delete-account-button">Delete Account</button>
     </div>
   </div>
 </template>
@@ -36,8 +37,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { onAuthStateChanged, signOut, deleteUser } from 'firebase/auth'
+import { doc, getDoc, deleteDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
 
 const router = useRouter()
@@ -73,6 +74,29 @@ const handleLogout = async () => {
     router.push('/home')
   } catch (error) {
     console.error('Error logging out:', error)
+  }
+}
+
+const handleDeleteAccount = async () => {
+  if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        // Delete Firestore document first so we don't lose permission to do so
+        await deleteDoc(doc(db, 'users', user.uid));
+        // Then delete Auth record
+        await deleteUser(user);
+        router.push('/home');
+      }
+    } catch (error) {
+      // Firebase requires a recent login to delete an account for security
+      if (error.code === 'auth/requires-recent-login') {
+        alert('Please log out and log back in to verify your identity before deleting your account.');
+      } else {
+        console.error('Error deleting account:', error);
+        alert('Failed to delete account.');
+      }
+    }
   }
 }
 </script>
@@ -183,5 +207,24 @@ h2 {
 
 .logout-button:hover {
   background-color: #dc2626;
+}
+
+.delete-account-button {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.delete-account-button:hover {
+  background-color: #ef4444;
+  color: white;
 }
 </style>

@@ -15,7 +15,8 @@
             <th>Username</th>
             <th>Email</th>
             <th>Current Role</th>
-            <th>Actions</th>
+            <th>Change Role</th>
+            <th>Manage</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,14 @@
                 </option>
               </select>
             </td>
+            <td>
+              <button 
+                v-if="canDelete(user)" 
+                @click="deleteUserRecord(user)" 
+                class="delete-user-button">
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -51,7 +60,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { db } from '../firebase'
-import { collection, getDocs, doc, updateDoc, query, where } from 'firebase/firestore'
+import { collection, getDocs, doc, updateDoc, deleteDoc, query, where } from 'firebase/firestore'
 import { useUserRole } from '../composables/useUserRole'
 
 const { userRole, isLoading: authLoading } = useUserRole()
@@ -163,6 +172,27 @@ const updateRole = async (user, newRole) => {
     console.error('Error updating role:', error)
     alert('Failed to update user role.')
     user.selectedRole = originalRole // Revert select
+  }
+}
+
+const canDelete = (targetUser) => {
+  const currentUserRole = userRole.value
+  const targetRole = targetUser.role
+
+  if (currentUserRole === 'dev') return true
+  if (currentUserRole === 'admin') return targetRole !== 'dev'
+  return false
+}
+
+const deleteUserRecord = async (userToDelete) => {
+  if (confirm(`Are you sure you want to completely delete ${userToDelete.username}?`)) {
+    try {
+      await deleteDoc(doc(db, 'users', userToDelete.id))
+      users.value = users.value.filter(u => u.id !== userToDelete.id)
+    } catch (error) {
+      console.error('Error deleting user:', error)
+      alert('Failed to delete user.')
+    }
   }
 }
 </script>
@@ -277,5 +307,22 @@ const updateRole = async (user, newRole) => {
   background-color: var(--background-color);
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+.delete-user-button {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.delete-user-button:hover {
+  background-color: #ef4444;
+  color: white;
 }
 </style>
