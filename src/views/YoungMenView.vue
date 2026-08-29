@@ -42,7 +42,7 @@
     </section>
 
     <section class="social-section">
-      <GroupSocial :tags="['youngmen', 'ym']" />
+      <GroupSocial :tags="['youngmen', 'ym', 'youngmens']" />
     </section>
 
     <section class="info-section">

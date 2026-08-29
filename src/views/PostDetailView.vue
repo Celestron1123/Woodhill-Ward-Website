@@ -1,61 +1,56 @@
 <template>
-  <div>
-    <button @click="goBack" style="margin-bottom: 20px">&larr; Back to Feed</button>
+  <div class="page-container post-detail-container">
+    <button @click="goBack" class="btn-secondary back-btn">&larr; Back to Feed</button>
 
-    <div v-if="loading">Loading post...</div>
+    <div v-if="loading" class="loading-state">Loading post...</div>
 
     <div v-else-if="post">
-      <div style="border: 2px solid black; padding: 15px; margin-bottom: 20px">
-        <p>
+      <!-- Original Post -->
+      <div class="card post-card">
+        <div class="post-header">
           <strong>{{ post.authorName }}</strong>
-          <small> - {{ formatDate(post.created) }}</small>
-        </p>
-        <p style="font-size: 1.2em">{{ post.textContent }}</p>
+          <small class="post-date">{{ formatDate(post.created) }}</small>
+        </div>
+        <p class="post-content">{{ post.textContent }}</p>
 
-        <ImageCarousel :images="post.imageUrls" />
+        <div v-if="post.imageUrls && post.imageUrls.length > 0" class="post-images">
+          <ImageCarousel :images="post.imageUrls" />
+        </div>
       </div>
 
-      <div v-if="canCreatePost">
+      <!-- Add Comment Section -->
+      <div v-if="canCreatePost" class="card comment-form-card">
         <h3>Add a Comment</h3>
-        <form @submit.prevent="submitComment">
+        <form @submit.prevent="submitComment" class="comment-form">
           <textarea
             v-model="newCommentContent"
             placeholder="Write a comment..."
             rows="3"
-            cols="50"
             required
+            class="comment-textarea"
           ></textarea>
-          <br />
-          <button type="submit">Post Comment</button>
+          <div class="comment-actions">
+            <button type="submit" class="btn-primary">Post Comment</button>
+          </div>
         </form>
       </div>
 
-      <hr />
-
-      <div>
+      <!-- Comments List -->
+      <div class="comments-section">
         <h3>Comments</h3>
-        <div v-if="comments.length === 0">No comments yet. Be the first!</div>
+        <div v-if="comments.length === 0" class="empty-state">No comments yet. Be the first!</div>
 
-        <div
-          v-for="comment in comments"
-          :key="comment.id"
-          style="
-            border: 1px solid gray;
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-          "
-        >
-          <p>
+        <div v-for="comment in comments" :key="comment.id" class="card comment-card">
+          <div class="comment-header">
             <strong>{{ comment.authorName }}</strong>
-            <small> - {{ formatDate(comment.created) }}</small>
-          </p>
-          <p>{{ comment.content }}</p>
+            <small class="comment-date">{{ formatDate(comment.created) }}</small>
+          </div>
+          <p class="comment-content">{{ comment.content }}</p>
         </div>
       </div>
     </div>
 
-    <div v-else>
+    <div v-else class="error-state">
       <p>Error: Post could not be found.</p>
     </div>
   </div>
@@ -186,3 +181,119 @@ onMounted(() => {
   fetchPostAndComments()
 })
 </script>
+
+<style scoped>
+.post-detail-container {
+  max-width: 800px;
+}
+
+.back-btn {
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 3rem;
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-color);
+  margin-bottom: 1.5rem;
+}
+
+.post-card,
+.comment-form-card,
+.comment-card {
+  margin-bottom: 1.5rem;
+}
+
+.post-header,
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.post-date,
+.comment-date {
+  color: var(--text-secondary);
+}
+
+.post-content {
+  white-space: pre-wrap;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.comment-content {
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.post-images {
+  margin-bottom: 1rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.comment-form-card h3,
+.comments-section h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.comments-section h3 {
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.comment-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: var(--background-color);
+  border-color: var(--text-secondary);
+}
+</style>
