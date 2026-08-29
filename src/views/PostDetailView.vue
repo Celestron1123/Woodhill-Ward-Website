@@ -8,8 +8,16 @@
       <!-- Original Post -->
       <div class="card post-card">
         <div class="post-header">
-          <strong>{{ post.authorName }}</strong>
-          <small class="post-date">{{ formatDate(post.created) }}</small>
+          <div class="post-header-left">
+            <strong>{{ post.authorName }}</strong>
+            <small class="post-date">{{ formatDate(post.created) }}</small>
+          </div>
+          <div class="post-header-right" v-if="canDeletePost(post)">
+            <button class="options-btn" @click.stop="toggleMenu(post.id)">...</button>
+            <div v-if="openMenuId === post.id" class="options-menu">
+              <button @click="handleDeletePost(post.id)" class="delete-menu-item">Delete Post</button>
+            </div>
+          </div>
         </div>
         <p class="post-content">{{ post.textContent }}</p>
 
@@ -70,12 +78,13 @@ import {
   orderBy,
   serverTimestamp,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore'
 import ImageCarousel from '../components/ImageCarousel.vue'
 import { useUserRole } from '../composables/useUserRole'
 
 // Router handles navigation, Route gives us access to URL params
-const { canCreatePost } = useUserRole()
+const { canCreatePost, userRole } = useUserRole()
 const route = useRoute()
 const router = useRouter()
 
@@ -174,6 +183,38 @@ const formatDate = (timestamp) => {
 
 const goBack = () => {
   router.push('/feed')
+}
+
+const openMenuId = ref(null)
+
+const toggleMenu = (id) => {
+  openMenuId.value = openMenuId.value === id ? null : id
+}
+
+const canDeletePost = (postToCheck) => {
+  const role = userRole.value
+  if (!role) return false
+  if (['admin', 'dev'].includes(role)) return true
+  if (auth.currentUser && postToCheck.authorId === auth.currentUser.uid) return true
+  return false
+}
+
+const handleDeletePost = async (id) => {
+  if (confirm("Are you sure you want to delete this post? This cannot be undone.")) {
+    try {
+      const commentsRef = collection(db, 'posts', id, 'comments')
+      const commentsSnap = await getDocs(commentsRef)
+      const deletePromises = commentsSnap.docs.map(commentDoc => deleteDoc(commentDoc.ref))
+      await Promise.all(deletePromises)
+
+      await deleteDoc(doc(db, 'posts', id))
+      openMenuId.value = null
+      router.push('/feed')
+    } catch (error) {
+      console.error("Error deleting post:", error)
+      alert("Failed to delete post.")
+    }
+  }
 }
 
 // Fire data fetch on page load
@@ -295,5 +336,46 @@ onMounted(() => {
 .btn-secondary:hover {
   background-color: var(--background-color);
   border-color: var(--text-secondary);
+}
+
+.post-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.post-header-right {
+  position: relative;
+}
+.options-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  color: #7f8c8d;
+  line-height: 1;
+}
+.options-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+.delete-menu-item {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  color: #e74c3c;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 100%;
+  text-align: left;
+}
+.delete-menu-item:hover {
+  background: #fdf2f0;
 }
 </style>
