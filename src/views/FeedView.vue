@@ -90,7 +90,6 @@
 </template>
 
 <script setup>
-import { signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
@@ -273,19 +272,6 @@ const goToPost = (postId) => {
 const formatDate = (timestamp) => {
   if (!timestamp) return 'Just now'
   return timestamp.toDate().toLocaleString()
-}
-
-const handleSignOut = async () => {
-  try {
-    // Tells Firebase to destroy the user's current session
-    await signOut(auth)
-    alert('Successfully logged out!')
-
-    // Send them back to the Login screen
-    router.push('/login')
-  } catch (error) {
-    console.error('Error logging out:', error.message)
-  }
 }
 
 // Load posts immediately when the user visits the page
