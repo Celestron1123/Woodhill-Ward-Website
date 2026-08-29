@@ -46,11 +46,11 @@
         </div>
         <div
           class="info-card interactive-card"
-          @click="openLightbox('/src/assets/building-map.png')"
+          @click="openLightbox('/src/assets/building-map.jpg')"
         >
           <h3>Building Layout</h3>
           <img
-            src="/src/assets/building-map.png"
+            src="/src/assets/building-map.jpg"
             alt="Layout map of the ward building"
             class="thumbnail"
           />
