@@ -120,7 +120,7 @@ h2 {
 
 <script setup>
 import { ref } from 'vue'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase' // Importing both auth and our database
 import { useRouter } from 'vue-router'
@@ -137,6 +137,9 @@ const handleSignUp = async () => {
     const user = userCredential.user
     await updateProfile(user, { displayName: username.value })
 
+    // Send email verification
+    await sendEmailVerification(user)
+
     // 2. Create the user document in the Firestore Database
     // We use the Auth UID as the Document ID to link them perfectly
     await setDoc(doc(db, 'users', user.uid), {
@@ -144,6 +147,7 @@ const handleSignUp = async () => {
       email: user.email,
       role: 'viewer', // Everyone starts as a viewer per the design doc
       calling: '', // Placeholder for future use
+      emailVerified: false,
       created: new Date(),
     })
     console.log('Account created and added to database!')

@@ -14,6 +14,7 @@
           <tr>
             <th>Username</th>
             <th>Email</th>
+            <th>Status</th>
             <th>Current Role</th>
             <th>Change Role</th>
             <th>Manage</th>
@@ -25,6 +26,11 @@
               <strong>{{ user.username }}</strong>
             </td>
             <td>{{ user.email }}</td>
+            <td>
+              <span :class="user.emailVerified ? 'status-verified-text' : 'status-unverified-text'">
+                {{ user.emailVerified ? 'Verified' : 'Unverified' }}
+              </span>
+            </td>
             <td>
               <span :class="['role-badge', user.role]" :title="getTooltip(user.role)">
                 {{ user.role }}
@@ -261,6 +267,20 @@ const deleteUserRecord = async (userToDelete) => {
   font-size: 0.85rem;
   cursor: help;
   display: inline-block;
+}
+
+.status-verified-text {
+  color: #15803d;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.status-unverified-text {
+  color: #b91c1c;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
 }
 
 /* Pastel rainbow colors (cool for low, hot for high) */

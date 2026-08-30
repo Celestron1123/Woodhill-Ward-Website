@@ -116,7 +116,8 @@ h2 {
 <script setup>
 import { ref } from 'vue'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
+import { doc, updateDoc } from 'firebase/firestore'
+import { auth, db } from '../firebase'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -127,7 +128,17 @@ const password = ref('')
 const handleLogin = async () => {
   try {
     // This function checks the database to see if the user exists and the password matches
-    await signInWithEmailAndPassword(auth, email.value, password.value)
+    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value)
+    
+    // Sync email verification status to Firestore
+    if (userCredential.user) {
+      try {
+        const userRef = doc(db, 'users', userCredential.user.uid)
+        await updateDoc(userRef, { emailVerified: userCredential.user.emailVerified })
+      } catch (e) {
+        console.error('Error syncing emailVerified status:', e)
+      }
+    }
 
     console.log('Logged in successfully!')
     router.push('/home')

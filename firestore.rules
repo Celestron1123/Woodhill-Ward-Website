@@ -48,7 +48,8 @@ service cloud.firestore {
       allow update: if request.auth != null && (
         getUserRole() == 'dev' ||
         (getUserRole() == 'admin' && resource.data.role != 'dev' && request.resource.data.role != 'dev') ||
-        (getUserRole() == 'mod' && resource.data.role in ['viewer', 'verified'] && request.resource.data.role in ['viewer', 'verified'])
+        (getUserRole() == 'mod' && resource.data.role in ['viewer', 'verified'] && request.resource.data.role in ['viewer', 'verified']) ||
+        (request.auth.uid == userId && request.resource.data.role == resource.data.role)
       );
       
       // Delete rules

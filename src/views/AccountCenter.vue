@@ -19,6 +19,20 @@
       </div>
 
       <div class="info-group">
+        <label>Status:</label>
+        <p :class="userData?.emailVerified ? 'status-verified' : 'status-unverified'">
+          {{ userData?.emailVerified ? 'Verified' : 'Unverified' }}
+        </p>
+        <button 
+          v-if="!userData?.emailVerified" 
+          @click="resendVerification" 
+          class="resend-button"
+        >
+          Resend Verification Email
+        </button>
+      </div>
+
+      <div class="info-group">
         <label>Role:</label>
         <p class="role-badge">{{ userData?.role || 'Viewer' }}</p>
       </div>
@@ -37,8 +51,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { onAuthStateChanged, signOut, deleteUser } from 'firebase/auth'
-import { doc, getDoc, deleteDoc } from 'firebase/firestore'
+import { onAuthStateChanged, signOut, deleteUser, sendEmailVerification } from 'firebase/auth'
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase'
 
 const router = useRouter()
@@ -50,10 +64,19 @@ onMounted(() => {
     if (user) {
       isLoggedIn.value = true
       try {
+        // Refresh the user token to get the latest emailVerified status from Firebase servers
+        await user.reload()
+        
         const userDocRef = doc(db, 'users', user.uid)
         const userDoc = await getDoc(userDocRef)
         if (userDoc.exists()) {
           userData.value = userDoc.data()
+          
+          // Sync email verification status
+          if (userData.value.emailVerified !== user.emailVerified) {
+            await updateDoc(userDocRef, { emailVerified: user.emailVerified })
+            userData.value.emailVerified = user.emailVerified
+          }
         }
       } catch (error) {
         console.error('Error fetching user data:', error)
@@ -66,6 +89,24 @@ onMounted(() => {
 
 const goToLogin = () => {
   router.push('/login')
+}
+
+const resendVerification = async () => {
+  try {
+    const user = auth.currentUser
+    if (user) {
+      await sendEmailVerification(user)
+      alert('Verification email sent! Please check your inbox.')
+    }
+  } catch (error) {
+    console.error('Error sending verification email:', error)
+    // Common error is sending too many requests
+    if (error.code === 'auth/too-many-requests') {
+      alert('Too many requests. Please wait a bit before trying again.')
+    } else {
+      alert('Failed to send verification email.')
+    }
+  }
 }
 
 const handleLogout = async () => {
@@ -209,6 +250,35 @@ h2 {
 
 .logout-button:hover {
   background-color: #dc2626;
+}
+
+.status-verified {
+  color: #15803d !important;
+  font-weight: bold;
+}
+
+.status-unverified {
+  color: #b91c1c !important;
+  font-weight: bold;
+}
+
+.resend-button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--surface-color);
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.resend-button:hover {
+  background-color: var(--accent-color);
+  color: white;
 }
 
 .delete-account-button {
