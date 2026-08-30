@@ -135,7 +135,7 @@ onMounted(() => {
 }
 
 .logo-link:hover .logo-icon {
-  transform: scale(1.05);
+  transform: scale(1.1) rotate(-5deg);
 }
 
 /* Right navigation flex container */
@@ -158,16 +158,37 @@ onMounted(() => {
   /* Light gray/white */
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-color);
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-  color: var(--accent-hover);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .router-link-active {
   color: var(--accent-color);
   font-weight: 700;
+}
+
+.router-link-active::after {
+  width: 100%;
 }
 
 .users-link {
@@ -178,20 +199,21 @@ onMounted(() => {
 /* Authentication button */
 .auth-button {
   text-decoration: none;
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, #e87b55 100%);
   color: white;
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.5rem 1.2rem;
   border-radius: var(--radius-md);
-  transition:
-    background-color 0.2s ease,
-    transform 0.1s ease;
+  box-shadow: 0 4px 6px rgba(209, 107, 71, 0.25);
+  transition: all 0.3s ease;
 }
 
 .auth-button:hover {
-  background-color: var(--accent-hover);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-color) 100%);
   color: white;
+  box-shadow: 0 6px 12px rgba(209, 107, 71, 0.4);
+  transform: translateY(-2px);
 }
 
 .auth-button:active {
@@ -246,6 +268,10 @@ onMounted(() => {
 
   .nav-link:last-child {
     border-bottom: none;
+  }
+
+  .nav-link::after {
+    display: none;
   }
 }
 

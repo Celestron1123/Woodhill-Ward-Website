@@ -133,9 +133,18 @@ const getTagColor = (tag) => {
 .event-item {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 0;
+  padding: 1.5rem;
   border-bottom: 1px solid var(--border-color);
   gap: 1rem;
+  transition: all 0.3s ease;
+  border-radius: var(--radius-md);
+}
+
+.event-item:hover {
+  background-color: white;
+  transform: scale(1.02) translateX(4px);
+  border-bottom-color: transparent;
+  box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.1);
 }
 
 .event-item:last-child {

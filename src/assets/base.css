@@ -78,31 +78,36 @@ button {
 
 .card {
   background-color: var(--surface-color);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(227, 222, 201, 0.5); /* Lighter border-color */
   padding: 1.5rem;
   transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    box-shadow 0.3s ease,
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
 
 .btn-primary {
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, #e87b55 100%);
   color: white;
   border: none;
   border-radius: var(--radius-md);
-  padding: 0.6rem 1.2rem;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 6px rgba(209, 107, 71, 0.25);
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-hover);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-color) 100%);
   color: white;
+  box-shadow: 0 6px 12px rgba(209, 107, 71, 0.4);
+  transform: translateY(-2px);
 }
+
