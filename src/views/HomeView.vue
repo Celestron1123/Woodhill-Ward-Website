@@ -35,18 +35,40 @@
     <section class="info-section">
       <h2>Building Info</h2>
       <div class="card-grid">
-        <div class="info-card interactive-card" @click="openLightbox('/src/assets/ward-boundaries.png')">
+        <div
+          class="info-card interactive-card"
+          @click="
+            openLightbox(
+              'https://res.cloudinary.com/rweg4kq4/image/upload/v1788061592/ward-boundaries_plktx9.png',
+            )
+          "
+        >
           <h3>Ward Boundaries</h3>
           <div class="img-wrapper">
-            <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail" />
+            <img
+              src="https://res.cloudinary.com/rweg4kq4/image/upload/v1788061592/ward-boundaries_plktx9.png"
+              alt="Map of Wood Hill Ward boundaries"
+              class="thumbnail"
+            />
             <div class="img-overlay"><span>🔍 View Map</span></div>
           </div>
           <p class="click-hint">Tap to expand map</p>
         </div>
-        <div class="info-card interactive-card" @click="openLightbox('/src/assets/building-map.jpg')">
+        <div
+          class="info-card interactive-card"
+          @click="
+            openLightbox(
+              'https://res.cloudinary.com/rweg4kq4/image/upload/v1788061592/building-map_plh6u8.jpg',
+            )
+          "
+        >
           <h3>Building Layout</h3>
           <div class="img-wrapper">
-            <img src="/src/assets/building-map.jpg" alt="Layout map of the ward building" class="thumbnail" />
+            <img
+              src="https://res.cloudinary.com/rweg4kq4/image/upload/v1788061592/building-map_plh6u8.jpg"
+              alt="Layout map of the ward building"
+              class="thumbnail"
+            />
             <div class="img-overlay"><span>🔍 View Map</span></div>
           </div>
           <p class="click-hint">Tap to expand map</p>
@@ -123,7 +145,9 @@ const closeLightbox = () => {
   background-position: center;
   color: white;
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 @media (max-width: 768px) {
@@ -329,7 +353,9 @@ const closeLightbox = () => {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(227, 222, 201, 0.5);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s ease;
 }
 
 .contact-item:hover {
