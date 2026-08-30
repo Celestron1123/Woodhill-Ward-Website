@@ -35,32 +35,18 @@
     <section class="info-section">
       <h2>Building Info</h2>
       <div class="card-grid">
-        <div
-          class="info-card interactive-card"
-          @click="openLightbox('/src/assets/ward-boundaries.png')"
-        >
+        <div class="info-card interactive-card" @click="openLightbox('/src/assets/ward-boundaries.png')">
           <h3>Ward Boundaries</h3>
           <div class="img-wrapper">
-            <img
-              src="/src/assets/ward-boundaries.png"
-              alt="Map of Wood Hill Ward boundaries"
-              class="thumbnail"
-            />
+            <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail" />
             <div class="img-overlay"><span>🔍 View Map</span></div>
           </div>
           <p class="click-hint">Tap to expand map</p>
         </div>
-        <div
-          class="info-card interactive-card"
-          @click="openLightbox('/src/assets/building-map.jpg')"
-        >
+        <div class="info-card interactive-card" @click="openLightbox('/src/assets/building-map.jpg')">
           <h3>Building Layout</h3>
           <div class="img-wrapper">
-            <img
-              src="/src/assets/building-map.jpg"
-              alt="Layout map of the ward building"
-              class="thumbnail"
-            />
+            <img src="/src/assets/building-map.jpg" alt="Layout map of the ward building" class="thumbnail" />
             <div class="img-overlay"><span>🔍 View Map</span></div>
           </div>
           <p class="click-hint">Tap to expand map</p>
@@ -153,7 +139,7 @@ const closeLightbox = () => {
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, rgba(38, 56, 74, 0.85) 0%, rgba(38, 56, 74, 0.4) 100%);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
   z-index: 1;
 }
 

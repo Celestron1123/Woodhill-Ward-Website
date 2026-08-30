@@ -237,33 +237,38 @@ onMounted(() => {
   }
 
   .nav-links {
-    display: none;
+    display: flex;
     position: absolute;
     top: 100%;
+    left: 0;
     right: 0;
-    width: 250px;
+    width: 100%;
     height: auto;
-    max-height: calc(100vh - 78px);
     background-color: var(--primary-color);
     flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
+    align-items: center;
+    padding: 0;
+    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
     z-index: 999;
-    overflow-y: auto;
-    border-bottom-left-radius: var(--radius-md);
-    border-left: 1px solid var(--secondary-color);
-    border-bottom: 1px solid var(--secondary-color);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   }
 
   .nav-links.menu-open {
-    display: flex;
+    max-height: 600px;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
   }
 
   .nav-link {
     width: 100%;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--secondary-color);
+    padding: 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 1.1rem;
+    color: white;
   }
 
   .nav-link:last-child {
