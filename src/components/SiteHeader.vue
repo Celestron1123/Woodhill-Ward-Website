@@ -262,16 +262,16 @@ onMounted(() => {
 
   .nav-links.menu-open {
     max-height: 600px;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .nav-link {
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 0.6rem 1.5rem;
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: white;
   }
 

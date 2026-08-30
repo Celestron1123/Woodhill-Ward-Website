@@ -2,7 +2,7 @@
   <main class="main-view-container">
     <header class="page-header">
       <h1>Young Women</h1>
-      <p class="subtitle">Strive to be worthy</p>
+      <p class="subtitle">Walk with Him</p>
     </header>
 
     <section class="calendar-section">
