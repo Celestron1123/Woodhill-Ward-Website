@@ -158,7 +158,9 @@ onMounted(() => {
   /* Light gray/white */
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
   position: relative;
 }
 
@@ -248,25 +250,27 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     padding: 0;
-    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
     z-index: 999;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease;
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   }
 
   .nav-links.menu-open {
     max-height: 600px;
     padding: 1rem 0;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .nav-link {
     width: 100%;
     padding: 1rem 2rem;
     text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     font-size: 1.1rem;
     color: white;
   }
