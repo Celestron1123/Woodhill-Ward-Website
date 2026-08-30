@@ -43,10 +43,11 @@
               </select>
             </td>
             <td>
-              <button 
-                v-if="canDelete(user)" 
-                @click="deleteUserRecord(user)" 
-                class="delete-user-button">
+              <button
+                v-if="canDelete(user)"
+                @click="deleteUserRecord(user)"
+                class="delete-user-button"
+              >
                 Delete
               </button>
             </td>
@@ -188,7 +189,7 @@ const deleteUserRecord = async (userToDelete) => {
   if (confirm(`Are you sure you want to completely delete ${userToDelete.username}?`)) {
     try {
       await deleteDoc(doc(db, 'users', userToDelete.id))
-      users.value = users.value.filter(u => u.id !== userToDelete.id)
+      users.value = users.value.filter((u) => u.id !== userToDelete.id)
     } catch (error) {
       console.error('Error deleting user:', error)
       alert('Failed to delete user.')

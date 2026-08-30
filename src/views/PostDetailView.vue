@@ -9,7 +9,9 @@
       <div class="card post-card">
         <div class="post-header">
           <div class="post-header-left">
-            <div class="avatar-placeholder">{{ post.authorName ? post.authorName.charAt(0).toUpperCase() : '?' }}</div>
+            <div class="avatar-placeholder">
+              {{ post.authorName ? post.authorName.charAt(0).toUpperCase() : '?' }}
+            </div>
             <div class="author-info">
               <strong>{{ post.authorName }}</strong>
               <small class="post-date">{{ formatDate(post.created) }}</small>
@@ -18,7 +20,9 @@
           <div class="post-header-right" v-if="canDeletePost(post)">
             <button class="options-btn" @click.stop="toggleMenu(post.id)">...</button>
             <div v-if="openMenuId === post.id" class="options-menu">
-              <button @click="handleDeletePost(post.id)" class="delete-menu-item">Delete Post</button>
+              <button @click="handleDeletePost(post.id)" class="delete-menu-item">
+                Delete Post
+              </button>
             </div>
           </div>
         </div>
@@ -54,7 +58,9 @@
         <div v-for="comment in comments" :key="comment.id" class="card comment-card">
           <div class="comment-header">
             <div class="comment-header-left">
-              <div class="avatar-placeholder small-avatar">{{ comment.authorName ? comment.authorName.charAt(0).toUpperCase() : '?' }}</div>
+              <div class="avatar-placeholder small-avatar">
+                {{ comment.authorName ? comment.authorName.charAt(0).toUpperCase() : '?' }}
+              </div>
               <div class="author-info">
                 <strong>{{ comment.authorName }}</strong>
                 <small class="comment-date">{{ formatDate(comment.created) }}</small>
@@ -208,19 +214,19 @@ const canDeletePost = (postToCheck) => {
 }
 
 const handleDeletePost = async (id) => {
-  if (confirm("Are you sure you want to delete this post? This cannot be undone.")) {
+  if (confirm('Are you sure you want to delete this post? This cannot be undone.')) {
     try {
       const commentsRef = collection(db, 'posts', id, 'comments')
       const commentsSnap = await getDocs(commentsRef)
-      const deletePromises = commentsSnap.docs.map(commentDoc => deleteDoc(commentDoc.ref))
+      const deletePromises = commentsSnap.docs.map((commentDoc) => deleteDoc(commentDoc.ref))
       await Promise.all(deletePromises)
 
       await deleteDoc(doc(db, 'posts', id))
       openMenuId.value = null
       router.push('/feed')
     } catch (error) {
-      console.error("Error deleting post:", error)
-      alert("Failed to delete post.")
+      console.error('Error deleting post:', error)
+      alert('Failed to delete post.')
     }
   }
 }
@@ -297,7 +303,7 @@ onMounted(() => {
   justify-content: center;
   font-weight: 700;
   font-size: 1.3rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .small-avatar {
@@ -394,7 +400,6 @@ onMounted(() => {
   border-color: var(--text-secondary);
 }
 
-
 .post-header-right {
   position: relative;
 }
@@ -414,7 +419,7 @@ onMounted(() => {
   background: white;
   border: 1px solid #eaeaea;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 .delete-menu-item {

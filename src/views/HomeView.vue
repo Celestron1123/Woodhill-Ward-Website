@@ -126,7 +126,7 @@ const closeLightbox = () => {
   padding: 4rem 1rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background-image: url('https://images.unsplash.com/photo-1438283173091-5dbf5c5a3206?auto=format&fit=crop&q=80&w=1000');
+  background-image: url('https://images.unsplash.com/photo-1723596331257-25437c6d658b?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;
   background-position: center;
   color: white;
@@ -139,7 +139,8 @@ const closeLightbox = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(38, 56, 74, 0.7); /* Match primary color with opacity */
+  background: rgba(38, 56, 74, 0.7);
+  /* Match primary color with opacity */
   z-index: 1;
 }
 
@@ -152,7 +153,7 @@ const closeLightbox = () => {
   font-size: 3rem;
   margin: 0 0 0.5rem 0;
   color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
@@ -160,7 +161,7 @@ const closeLightbox = () => {
   font-size: 1.3rem;
   margin: 0;
   font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .calendar-section {
