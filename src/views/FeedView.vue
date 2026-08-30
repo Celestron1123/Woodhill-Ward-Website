@@ -54,8 +54,11 @@
       <div v-for="post in posts" :key="post.id" class="card post-card">
         <div class="post-header">
           <div class="post-header-left">
-            <strong>{{ post.authorName }}</strong>
-            <small class="post-date">{{ formatDate(post.created) }}</small>
+            <div class="avatar-placeholder">{{ post.authorName ? post.authorName.charAt(0).toUpperCase() : '?' }}</div>
+            <div class="author-info">
+              <strong>{{ post.authorName }}</strong>
+              <small class="post-date">{{ formatDate(post.created) }}</small>
+            </div>
           </div>
           <div class="post-header-right" v-if="canDeletePost(post)">
             <button class="options-btn" @click.stop="toggleMenu(post.id)">...</button>
@@ -488,18 +491,52 @@ onMounted(() => {
 }
 
 .post-card {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--accent-color);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-lg);
 }
 
 .post-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1rem;
+}
+
+.post-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar-placeholder {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-info strong {
+  font-size: 1.1rem;
+  color: var(--primary-color);
 }
 
 .post-date {
   color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 .post-content {
@@ -555,16 +592,7 @@ onMounted(() => {
   border: 1px dashed var(--border-color);
 }
 
-.post-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.post-header-left {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+
 .post-header-right {
   position: relative;
 }

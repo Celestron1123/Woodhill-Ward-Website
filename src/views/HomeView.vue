@@ -1,8 +1,11 @@
 <template>
   <main class="main-view-container">
-    <header class="page-header">
-      <h1>Wood Hill Ward Home</h1>
-      <p class="subtitle">Upcoming Activities and Announcements</p>
+    <header class="page-header hero-header">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Wood Hill Ward Home</h1>
+        <p class="subtitle">Upcoming Activities and Announcements</p>
+      </div>
     </header>
 
     <section class="calendar-section">
@@ -116,23 +119,48 @@ const closeLightbox = () => {
   padding: 2rem 1rem;
 }
 
-.page-header {
+.page-header.hero-header {
+  position: relative;
   text-align: center;
   margin-bottom: 3rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 4rem 1rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-image: url('https://images.unsplash.com/photo-1438283173091-5dbf5c5a3206?auto=format&fit=crop&q=80&w=1000');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(38, 56, 74, 0.7); /* Match primary color with opacity */
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
 }
 
 .page-header h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin: 0 0 0.5rem 0;
-  color: var(--primary-color);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .subtitle {
-  color: var(--text-secondary);
-  font-size: 1.2rem;
+  color: #e2e8f0;
+  font-size: 1.3rem;
   margin: 0;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .calendar-section {

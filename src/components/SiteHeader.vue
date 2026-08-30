@@ -1,8 +1,9 @@
 <template>
   <header class="site-header">
     <div class="header-left">
-      <router-link to="/home">
+      <router-link to="/home" class="logo-link">
         <img src="../assets/header_icon.svg" alt="Home" class="logo-icon" />
+        <span class="ward-title">Wood Hill Ward</span>
       </router-link>
     </div>
 
@@ -110,6 +111,21 @@ onMounted(() => {
 }
 
 /* Adjust icon sizes */
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.ward-title {
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
 .logo-icon {
   height: 45px;
   width: auto;
@@ -118,7 +134,7 @@ onMounted(() => {
   /* Makes the SVG icon white */
 }
 
-.logo-icon:hover {
+.logo-link:hover .logo-icon {
   transform: scale(1.05);
 }
 
@@ -230,6 +246,34 @@ onMounted(() => {
 
   .nav-link:last-child {
     border-bottom: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .logo-icon {
+    height: 32px;
+  }
+
+  .ward-title {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .logo-link {
+    gap: 0.5rem;
+  }
+
+  .auth-button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .header-right {
+    gap: 0.75rem;
   }
 }
 </style>
