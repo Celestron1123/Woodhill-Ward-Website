@@ -1,8 +1,9 @@
 <template>
   <header class="site-header">
     <div class="header-left">
-      <router-link to="/home">
+      <router-link to="/home" class="logo-link">
         <img src="../assets/header_icon.svg" alt="Home" class="logo-icon" />
+        <span class="ward-title">Wood Hill Ward</span>
       </router-link>
     </div>
 
@@ -110,6 +111,21 @@ onMounted(() => {
 }
 
 /* Adjust icon sizes */
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.ward-title {
+  color: white;
+  font-family: 'Merriweather', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
 .logo-icon {
   height: 45px;
   width: auto;
@@ -118,8 +134,8 @@ onMounted(() => {
   /* Makes the SVG icon white */
 }
 
-.logo-icon:hover {
-  transform: scale(1.05);
+.logo-link:hover .logo-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 /* Right navigation flex container */
@@ -142,16 +158,37 @@ onMounted(() => {
   /* Light gray/white */
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-color);
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-  color: var(--accent-hover);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .router-link-active {
   color: var(--accent-color);
   font-weight: 700;
+}
+
+.router-link-active::after {
+  width: 100%;
 }
 
 .users-link {
@@ -162,20 +199,21 @@ onMounted(() => {
 /* Authentication button */
 .auth-button {
   text-decoration: none;
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, #e87b55 100%);
   color: white;
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.5rem 1.2rem;
   border-radius: var(--radius-md);
-  transition:
-    background-color 0.2s ease,
-    transform 0.1s ease;
+  box-shadow: 0 4px 6px rgba(209, 107, 71, 0.25);
+  transition: all 0.3s ease;
 }
 
 .auth-button:hover {
-  background-color: var(--accent-hover);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-color) 100%);
   color: white;
+  box-shadow: 0 6px 12px rgba(209, 107, 71, 0.4);
+  transform: translateY(-2px);
 }
 
 .auth-button:active {
@@ -199,37 +237,74 @@ onMounted(() => {
   }
 
   .nav-links {
-    display: none;
+    display: flex;
     position: absolute;
     top: 100%;
+    left: 0;
     right: 0;
-    width: 250px;
+    width: 100%;
     height: auto;
-    max-height: calc(100vh - 78px);
     background-color: var(--primary-color);
     flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
+    align-items: center;
+    padding: 0;
+    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
     z-index: 999;
-    overflow-y: auto;
-    border-bottom-left-radius: var(--radius-md);
-    border-left: 1px solid var(--secondary-color);
-    border-bottom: 1px solid var(--secondary-color);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   }
 
   .nav-links.menu-open {
-    display: flex;
+    max-height: 600px;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255,255,255,0.05);
   }
 
   .nav-link {
     width: 100%;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--secondary-color);
+    padding: 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 1.1rem;
+    color: white;
   }
 
   .nav-link:last-child {
     border-bottom: none;
+  }
+
+  .nav-link::after {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .logo-icon {
+    height: 32px;
+  }
+
+  .ward-title {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .logo-link {
+    gap: 0.5rem;
+  }
+
+  .auth-button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .header-right {
+    gap: 0.75rem;
   }
 }
 </style>

@@ -78,23 +78,25 @@ const handleLogout = async () => {
 }
 
 const handleDeleteAccount = async () => {
-  if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
     try {
-      const user = auth.currentUser;
+      const user = auth.currentUser
       if (user) {
         // Delete Firestore document first so we don't lose permission to do so
-        await deleteDoc(doc(db, 'users', user.uid));
+        await deleteDoc(doc(db, 'users', user.uid))
         // Then delete Auth record
-        await deleteUser(user);
-        router.push('/home');
+        await deleteUser(user)
+        router.push('/home')
       }
     } catch (error) {
       // Firebase requires a recent login to delete an account for security
       if (error.code === 'auth/requires-recent-login') {
-        alert('Please log out and log back in to verify your identity before deleting your account.');
+        alert(
+          'Please log out and log back in to verify your identity before deleting your account.',
+        )
       } else {
-        console.error('Error deleting account:', error);
-        alert('Failed to delete account.');
+        console.error('Error deleting account:', error)
+        alert('Failed to delete account.')
       }
     }
   }

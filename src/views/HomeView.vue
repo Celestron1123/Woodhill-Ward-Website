@@ -1,8 +1,11 @@
 <template>
   <main class="main-view-container">
-    <header class="page-header">
-      <h1>Wood Hill Ward Home</h1>
-      <p class="subtitle">Upcoming Activities and Announcements</p>
+    <header class="page-header hero-header">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Wood Hill Ward Home</h1>
+        <p class="subtitle">Upcoming Activities and Announcements</p>
+      </div>
     </header>
 
     <section class="calendar-section">
@@ -32,28 +35,20 @@
     <section class="info-section">
       <h2>Building Info</h2>
       <div class="card-grid">
-        <div
-          class="info-card interactive-card"
-          @click="openLightbox('/src/assets/ward-boundaries.png')"
-        >
+        <div class="info-card interactive-card" @click="openLightbox('/src/assets/ward-boundaries.png')">
           <h3>Ward Boundaries</h3>
-          <img
-            src="/src/assets/ward-boundaries.png"
-            alt="Map of Wood Hill Ward boundaries"
-            class="thumbnail"
-          />
+          <div class="img-wrapper">
+            <img src="/src/assets/ward-boundaries.png" alt="Map of Wood Hill Ward boundaries" class="thumbnail" />
+            <div class="img-overlay"><span>🔍 View Map</span></div>
+          </div>
           <p class="click-hint">Tap to expand map</p>
         </div>
-        <div
-          class="info-card interactive-card"
-          @click="openLightbox('/src/assets/building-map.jpg')"
-        >
+        <div class="info-card interactive-card" @click="openLightbox('/src/assets/building-map.jpg')">
           <h3>Building Layout</h3>
-          <img
-            src="/src/assets/building-map.jpg"
-            alt="Layout map of the ward building"
-            class="thumbnail"
-          />
+          <div class="img-wrapper">
+            <img src="/src/assets/building-map.jpg" alt="Layout map of the ward building" class="thumbnail" />
+            <div class="img-overlay"><span>🔍 View Map</span></div>
+          </div>
           <p class="click-hint">Tap to expand map</p>
         </div>
       </div>
@@ -116,32 +111,65 @@ const closeLightbox = () => {
   padding: 2rem 1rem;
 }
 
-.page-header {
+.page-header.hero-header {
+  position: relative;
   text-align: center;
   margin-bottom: 3rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 5rem 1rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-image: url('https://images.unsplash.com/photo-1723596331257-25437c6d658b?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .page-header.hero-header {
+    padding: 2.5rem 1rem;
+  }
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(38, 56, 74, 0.85) 0%, rgba(38, 56, 74, 0.4) 100%);
+  backdrop-filter: blur(1px);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
 }
 
 .page-header h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin: 0 0 0.5rem 0;
-  color: var(--primary-color);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
-  color: var(--text-secondary);
-  font-size: 1.2rem;
+  color: #e2e8f0;
+  font-size: 1.3rem;
   margin: 0;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .calendar-section {
   background: var(--surface-color);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   margin-bottom: 3rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(227, 222, 201, 0.5);
 }
 
 .announcements-section,
@@ -172,14 +200,14 @@ const closeLightbox = () => {
 
 .info-card {
   background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(227, 222, 201, 0.5);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   text-align: center;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s ease;
 }
 
 .info-card h3 {
@@ -197,8 +225,8 @@ const closeLightbox = () => {
 }
 
 .link-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
   border-color: var(--accent-color);
 }
 
@@ -211,26 +239,73 @@ const closeLightbox = () => {
 /* Map Cards */
 .interactive-card {
   cursor: pointer;
+  overflow: hidden;
 }
 
 .interactive-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
   border-color: var(--accent-color);
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
 }
 
 .thumbnail {
   width: 100%;
   max-height: 200px;
   object-fit: cover;
-  border-radius: var(--radius-sm);
-  margin-bottom: 1rem;
-  border: 1px solid var(--border-color);
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.interactive-card:hover .thumbnail {
+  transform: scale(1.05);
+}
+
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(38, 56, 74, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.img-overlay span {
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 9999px;
+  backdrop-filter: blur(2px);
+  transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+
+.interactive-card:hover .img-overlay {
+  opacity: 1;
+}
+
+.interactive-card:hover .img-overlay span {
+  transform: translateY(0);
 }
 
 .click-hint {
-  font-size: 0.9rem;
-  color: var(--accent-color);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
   margin: 0;
   font-weight: 500;
 }
@@ -251,9 +326,15 @@ const closeLightbox = () => {
 .contact-item {
   background: var(--surface-color);
   padding: 1.5rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(227, 222, 201, 0.5);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
 }
 
 .contact-item strong {

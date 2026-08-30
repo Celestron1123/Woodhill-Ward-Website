@@ -9,13 +9,20 @@
       <div class="card post-card">
         <div class="post-header">
           <div class="post-header-left">
-            <strong>{{ post.authorName }}</strong>
-            <small class="post-date">{{ formatDate(post.created) }}</small>
+            <div class="avatar-placeholder">
+              {{ post.authorName ? post.authorName.charAt(0).toUpperCase() : '?' }}
+            </div>
+            <div class="author-info">
+              <strong>{{ post.authorName }}</strong>
+              <small class="post-date">{{ formatDate(post.created) }}</small>
+            </div>
           </div>
           <div class="post-header-right" v-if="canDeletePost(post)">
             <button class="options-btn" @click.stop="toggleMenu(post.id)">...</button>
             <div v-if="openMenuId === post.id" class="options-menu">
-              <button @click="handleDeletePost(post.id)" class="delete-menu-item">Delete Post</button>
+              <button @click="handleDeletePost(post.id)" class="delete-menu-item">
+                Delete Post
+              </button>
             </div>
           </div>
         </div>
@@ -50,8 +57,15 @@
 
         <div v-for="comment in comments" :key="comment.id" class="card comment-card">
           <div class="comment-header">
-            <strong>{{ comment.authorName }}</strong>
-            <small class="comment-date">{{ formatDate(comment.created) }}</small>
+            <div class="comment-header-left">
+              <div class="avatar-placeholder small-avatar">
+                {{ comment.authorName ? comment.authorName.charAt(0).toUpperCase() : '?' }}
+              </div>
+              <div class="author-info">
+                <strong>{{ comment.authorName }}</strong>
+                <small class="comment-date">{{ formatDate(comment.created) }}</small>
+              </div>
+            </div>
           </div>
           <p class="comment-content">{{ comment.content }}</p>
         </div>
@@ -200,19 +214,19 @@ const canDeletePost = (postToCheck) => {
 }
 
 const handleDeletePost = async (id) => {
-  if (confirm("Are you sure you want to delete this post? This cannot be undone.")) {
+  if (confirm('Are you sure you want to delete this post? This cannot be undone.')) {
     try {
       const commentsRef = collection(db, 'posts', id, 'comments')
       const commentsSnap = await getDocs(commentsRef)
-      const deletePromises = commentsSnap.docs.map(commentDoc => deleteDoc(commentDoc.ref))
+      const deletePromises = commentsSnap.docs.map((commentDoc) => deleteDoc(commentDoc.ref))
       await Promise.all(deletePromises)
 
       await deleteDoc(doc(db, 'posts', id))
       openMenuId.value = null
       router.push('/feed')
     } catch (error) {
-      console.error("Error deleting post:", error)
-      alert("Failed to delete post.")
+      console.error('Error deleting post:', error)
+      alert('Failed to delete post.')
     }
   }
 }
@@ -247,35 +261,83 @@ onMounted(() => {
   margin-bottom: 1.5rem;
 }
 
-.post-card,
+.post-card {
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--accent-color);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-lg);
+}
+
 .comment-form-card,
 .comment-card {
   margin-bottom: 1.5rem;
+}
+
+.comment-card {
+  border-left: 3px solid var(--border-color);
+  background-color: var(--background-color);
 }
 
 .post-header,
 .comment-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1rem;
+}
+
+.comment-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar-placeholder {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.small-avatar {
+  width: 35px;
+  height: 35px;
+  font-size: 1rem;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-info strong {
+  font-size: 1.1rem;
+  color: var(--primary-color);
 }
 
 .post-date,
 .comment-date {
   color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 .post-content {
   white-space: pre-wrap;
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .comment-content {
   white-space: pre-wrap;
-  margin: 0;
+  margin: 0.5rem 0 0 3.2rem;
 }
 
 .post-images {
@@ -338,11 +400,6 @@ onMounted(() => {
   border-color: var(--text-secondary);
 }
 
-.post-header-left {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
 .post-header-right {
   position: relative;
 }
@@ -362,7 +419,7 @@ onMounted(() => {
   background: white;
   border: 1px solid #eaeaea;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 .delete-menu-item {

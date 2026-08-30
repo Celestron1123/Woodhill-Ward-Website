@@ -176,14 +176,20 @@ const getTagColor = (tag) => {
 
 .event-card {
   background-color: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border: 1px solid rgba(227, 222, 201, 0.5);
+  border-radius: var(--radius-lg);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
 }
 
 .event-header {
